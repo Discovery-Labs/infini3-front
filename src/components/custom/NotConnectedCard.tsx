@@ -1,4 +1,4 @@
-import { Text, Heading, VStack, Box, Button } from "@chakra-ui/react";
+import { Text, Heading, VStack, Box } from "@chakra-ui/react";
 
 import ConnectButton from "../Buttons/ConnectButton";
 

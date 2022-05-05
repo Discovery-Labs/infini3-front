@@ -13,10 +13,10 @@ import {
   Link,
   useDisclosure,
   VStack,
-  Flex,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+
 import useCustomColor from "../../core/hooks/useCustomColor";
 import ConnectButton from "../Buttons/ConnectButton";
 import ThemeToggle from "../Buttons/ThemeToggle";
@@ -56,12 +56,7 @@ const Navbar = () => {
 
   return (
     <Box as="nav" w="100%" top="0" zIndex={1}>
-      <Container
-        display="flex"
-        p={2}
-        maxW="7xl"
-        alignItems="center"
-      >
+      <Container display="flex" p={2} maxW="7xl" alignItems="center">
         <HStack>
           <ScaffoldIcon size="36px" />
           <NextLink href="/">
