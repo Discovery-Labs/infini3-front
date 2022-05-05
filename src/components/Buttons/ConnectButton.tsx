@@ -1,19 +1,12 @@
-import {
-  Button,
-  HStack,
-  IconButton,
-} from "@chakra-ui/react";
+import { Button, HStack, Skeleton, IconButton } from "@chakra-ui/react";
 import { IoMdExit } from "react-icons/io";
-import React from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 import Address from "../custom/Address";
-import { useAccount, useConnect, useDisconnect, useEnsName } from 'wagmi';
 
 function ConnectButton({ w }: { w?: string }) {
   const { data: account } = useAccount();
-  const { data: ensName } = useEnsName({ address: account?.address });
-  const { connect, connectors, error, isConnecting, pendingConnector } =
-    useConnect();
+  const { connect, connectors, isConnecting } = useConnect();
   const { disconnect } = useDisconnect();
 
   return (
@@ -27,23 +20,32 @@ function ConnectButton({ w }: { w?: string }) {
             fontSize="18px"
             size="short"
           />
-          <IconButton display={["none", "none", "inherit"]} aria-label="exit" icon={<IoMdExit />} onClick={() => disconnect()} />
+          <IconButton
+            display={["none", "none", "inherit"]}
+            aria-label="exit"
+            icon={<IoMdExit />}
+            onClick={() => disconnect()}
+          />
         </>
-      ) : connectors.map((connector) => {
-        return (
-          <Button w={w}
-            key={connector.id}
-            onClick={() => connect(connector)}
-          >
-            {connector.name}
-            {!connector.ready && ' (unsupported)'}
-            {isConnecting &&
-              connector.id === pendingConnector?.id &&
-              ' (connecting)'}
-          </Button>
-        )
-      })
-      }
+      ) : (
+        connectors.map((connector) => {
+          return isConnecting ? (
+            <Button w={w} key={connector.id}>
+              <Skeleton height="20px">Connecting</Skeleton>
+            </Button>
+          ) : (
+            <Button
+              w={w}
+              key={connector.id}
+              onClick={() => connect(connector)}
+              isLoading={isConnecting}
+              loadingText="Connecting"
+            >
+              {connector.name}
+            </Button>
+          );
+        })
+      )}
     </HStack>
   );
 }

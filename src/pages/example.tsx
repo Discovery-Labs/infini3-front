@@ -39,16 +39,11 @@ import {
   Tag,
   Textarea,
   useDisclosure,
-  useToast,
   VStack,
   useColorMode,
 } from "@chakra-ui/react";
-import toast, { Toaster } from "react-hot-toast";
-
-const notify = () => toast("Hello 😀");
 
 const Elements = () => {
-  const toast = useToast();
   const { colorMode, toggleColorMode } = useColorMode();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,21 +51,17 @@ const Elements = () => {
   return (
     <Box pt="16" mb={8} w="full">
       <VStack align="center">
-        <Toaster />
-        <Button onClick={notify}>notify</Button>
         {/* UI Components */}
         <VStack>
           <Button onClick={toggleColorMode}>
             Toggle {colorMode === "light" ? "Dark" : "Light"}
           </Button>
-          <Button variant="solid">
-            Hello
-          </Button>
+          <Button variant="solid">Hello</Button>
           <Button variant="outline">Hello</Button>
           <Button variant="ghost">Hello</Button>
           <Input />
-          <Select placeholder="Select option"></Select>
-          <Textarea placeholder="Select option"></Textarea>
+          <Select placeholder="Select option" />
+          <Textarea placeholder="Select option" />
 
           <Switch />
           {/* set to subtle default variant="subtle" colorScheme="cyan" */}
@@ -156,7 +147,7 @@ const Elements = () => {
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
             <Input type="email" />
-            <FormHelperText>We'll never share your email.</FormHelperText>
+            <FormHelperText>We will never share your email.</FormHelperText>
           </FormControl>
 
           <FormControl id="email" isRequired>
