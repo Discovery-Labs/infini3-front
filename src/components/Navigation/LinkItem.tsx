@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 

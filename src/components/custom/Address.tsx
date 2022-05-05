@@ -21,18 +21,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useCustomColor from "core/hooks/useCustomColor";
-import React from "react";
 import Blockies from "react-blockies";
 import { MdCheckCircle, MdContentCopy, MdExitToApp } from "react-icons/md";
 import { RiExternalLinkFill } from "react-icons/ri";
-import { useAccount, useEnsName } from 'wagmi';
+import { useAccount, useEnsName } from "wagmi";
 
 const blockExplorerLink = (address: string, blockExplorer?: string) =>
   `${blockExplorer || "https://etherscan.io/"}${"address/"}${address}`;
 
 function Address({
-  value,
-  address,
   logout,
   size = "long",
   blockExplorer,
@@ -105,7 +102,12 @@ function Address({
     );
   } else {
     text = (
-      <Flex display={["none", "none", "flex"]} alignItems="center" justifyContent="center" flexGrow={1}>
+      <Flex
+        display={["none", "none", "flex"]}
+        alignItems="center"
+        justifyContent="center"
+        flexGrow={1}
+      >
         <Link
           display="flex"
           alignItems="center"
@@ -162,7 +164,9 @@ function Address({
                   alignItems="center"
                   justifyContent="center"
                   border="none"
-                  textOverflow={displayAddress.startsWith("0x") ? "ellipsis" : "unset"}
+                  textOverflow={
+                    displayAddress.startsWith("0x") ? "ellipsis" : "unset"
+                  }
                   href={etherscanLink}
                   target="_blank"
                   rel="noopener noreferrer"

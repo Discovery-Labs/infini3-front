@@ -1,19 +1,13 @@
 import { RepeatIcon } from "@chakra-ui/icons";
 import { Heading, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
 
-import Faucet from "../components/custom/Faucet";
 import { hexToString } from "../core/helpers";
 import useCustomColor from "../core/hooks/useCustomColor";
 
 const Home = () => {
   const { data: account } = useAccount();
-  const {
-    data: balance,
-    isLoading,
-    refetch,
-  } = useBalance({
+  const { data: balance, refetch } = useBalance({
     addressOrName: account?.address,
   });
   const { coloredText, accentColor } = useCustomColor();
