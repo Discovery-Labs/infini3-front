@@ -1,17 +1,16 @@
 import { Button, HStack, Skeleton, IconButton } from "@chakra-ui/react";
 import { IoMdExit } from "react-icons/io";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useConnect, useDisconnect } from "wagmi";
 
 import Address from "../custom/Address";
 
 function ConnectButton({ w }: { w?: string }) {
-  const { data: account } = useAccount();
-  const { connect, connectors, isConnecting } = useConnect();
+  const { connect, connectors, isConnected, isConnecting } = useConnect();
   const { disconnect } = useDisconnect();
 
   return (
     <HStack>
-      {account?.address ? (
+      {isConnected ? (
         <>
           <Address fontSize="18px" size="short" />
           <IconButton
@@ -28,13 +27,7 @@ function ConnectButton({ w }: { w?: string }) {
               <Skeleton height="20px">Connecting</Skeleton>
             </Button>
           ) : (
-            <Button
-              w={w}
-              key={connector.id}
-              onClick={() => connect(connector)}
-              isLoading={isConnecting}
-              loadingText="Connecting"
-            >
+            <Button w={w} key={connector.id} onClick={() => connect(connector)}>
               {connector.name}
             </Button>
           );

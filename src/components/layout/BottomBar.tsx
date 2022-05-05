@@ -71,8 +71,8 @@ function BottomBar() {
           <NavItem icon={HiHome} href="/">
             Home
           </NavItem>
-          <NavItem icon={HiBriefcase} href="/contract">
-            Contract
+          <NavItem icon={HiBriefcase} href="/sponsors">
+            Sponsors
           </NavItem>
           <NavItem icon={HiCube} href="/example">
             Example

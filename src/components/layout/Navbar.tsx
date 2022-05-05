@@ -43,7 +43,8 @@ const LinkItem = ({ href, children, ...props }: any) => {
 const LinkItems = () => {
   return (
     <>
-      <LinkItem href="/">Contract</LinkItem>
+      <LinkItem href="/">Adventurers</LinkItem>
+      <LinkItem href="/sponsors">Sponsors</LinkItem>
       <LinkItem href="/example">ExampleUI</LinkItem>
       <LinkItem href="/subgraph">Subgraph</LinkItem>
     </>
@@ -67,7 +68,7 @@ const Navbar = () => {
               textTransform="uppercase"
               size="md"
             >
-              Scaffold
+              Infini3
             </Link>
           </NextLink>
           <HStack px="2" spacing="4" display={{ base: "none", lg: "flex" }}>

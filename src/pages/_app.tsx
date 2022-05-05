@@ -2,10 +2,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { EmotionCache } from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
-// import "@fontsource/poppins";
-// import "@fontsource/space-mono";
-import "@fontsource/inter";
-import "@fontsource/montserrat";
+import "@fontsource/poppins";
+import "@fontsource/space-mono";
+import "@fontsource/orbitron";
+// import "@fontsource/inter";
+// import "@fontsource/montserrat";
 
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";

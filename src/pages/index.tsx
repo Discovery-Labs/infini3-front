@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <VStack>
       <HStack align="center" w="full">
-        <Heading color={accentColor}>Title</Heading>
+        <Heading color={accentColor}>Adventurers</Heading>
       </HStack>
       <Text textStyle="h2">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos

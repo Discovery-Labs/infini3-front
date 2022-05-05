@@ -2825,12 +2825,17 @@
   resolved "https://registry.yarnpkg.com/@fontsource/montserrat/-/montserrat-4.5.10.tgz#0dc94425c575c785c2ac92d244c543bfbb005080"
   integrity sha512-JXe9wURwLFtPfrD3yYnfvue/Uv2L1iSEor4w6M5CcGO4iWSoaFgk7BPLUwksGD7ChKpGKpaNNLUt67VlCu2A1g==
 
-"@fontsource/poppins@^4.5.0":
+"@fontsource/orbitron@^4.5.6":
+  version "4.5.6"
+  resolved "https://registry.yarnpkg.com/@fontsource/orbitron/-/orbitron-4.5.6.tgz#12d0298eccf1458a9519030693828bca9c7a67f6"
+  integrity sha512-7WHpd5CjgAPfTH+r8HlGAXguHdvIjxirGmUfoqk2pXrEFbdY9aKbyA0X+lu5GO/lPF0f1FNjH73Q177zw6chng==
+
+"@fontsource/poppins@^4.5.8":
   version "4.5.8"
   resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.8.tgz#65ce9b32f31bda5a25c23001bcebf1c66e440320"
   integrity sha512-HE9yLDxYJEcxooVrYvvEhtyxaYU32hQIx1+npKegVefceE0l0zi0ePqKWWxYxkFpyy6WuZSQ+9rai3INnYKEJA==
 
-"@fontsource/space-mono@^4.5.0":
+"@fontsource/space-mono@^4.5.8":
   version "4.5.8"
   resolved "https://registry.yarnpkg.com/@fontsource/space-mono/-/space-mono-4.5.8.tgz#514a7344e706747dcace198a27f840dd104e0a06"
   integrity sha512-qO3riZauz1yu7g8gumsmKgGitgDx7dQbwjKG+rDhF/OfNNCPyjArcNIU22nvANZ7UuDvLzo3tRprqlosaS7fKA==
