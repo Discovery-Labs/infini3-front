@@ -24,13 +24,9 @@ import useCustomColor from "core/hooks/useCustomColor";
 import Blockies from "react-blockies";
 import { MdCheckCircle, MdContentCopy, MdExitToApp } from "react-icons/md";
 import { RiExternalLinkFill } from "react-icons/ri";
-import { useAccount, useEnsName } from "wagmi";
-
-const blockExplorerLink = (address: string, blockExplorer?: string) =>
-  `${blockExplorer || "https://etherscan.io/"}${"address/"}${address}`;
+import { useAccount, useDisconnect, useEnsName } from "wagmi";
 
 function Address({
-  logout,
   size = "long",
   blockExplorer,
   minimized = false,
@@ -38,9 +34,6 @@ function Address({
   fontSize,
   blockiesScale,
 }: {
-  value: string;
-  address: string;
-  logout?: any;
   size?: "long" | "short";
   blockExplorer?: string;
   minimized?: boolean;
@@ -48,12 +41,15 @@ function Address({
   fontSize?: string;
   blockiesScale?: number;
 }) {
-  const { data: account } = useAccount();
+  const blockExplorerLink = (address: string, explorer?: string) =>
+    `${explorer || "https://etherscan.io/"}${"address/"}${address}`;
+  const { disconnect } = useDisconnect();
+  const { data: account, isLoading } = useAccount();
   const { data: ensName } = useEnsName({ address: account?.address });
   const { hasCopied, onCopy } = useClipboard(account?.address || "");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { coloredText } = useCustomColor();
-  if (!account?.address) {
+  if (!account?.address || isLoading) {
     return (
       <Box padding="6" as="span">
         <SkeletonCircle size="10" />
@@ -193,7 +189,11 @@ function Address({
           </ModalBody>
 
           <ModalFooter>
-            <Button w="full" onClick={logout} rightIcon={<MdExitToApp />}>
+            <Button
+              w="full"
+              onClick={() => disconnect()}
+              rightIcon={<MdExitToApp />}
+            >
               Disconnect
             </Button>
           </ModalFooter>

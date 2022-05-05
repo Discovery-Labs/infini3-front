@@ -4,8 +4,8 @@ import { EmotionCache } from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 // import "@fontsource/poppins";
 // import "@fontsource/space-mono";
-// import '@fontsource/inter';
-// import '@fontsource/montserrat';
+import "@fontsource/inter";
+import "@fontsource/montserrat";
 
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
@@ -41,13 +41,19 @@ const client = createClient({
       new InjectedConnector(),
       new CoinbaseWalletConnector({
         options: {
-          appName: "create-web3-frontend",
+          appName: "Infini3",
           chainId: currentChain.id,
           jsonRpcUrl: rpcUrl,
         },
       }),
       new WalletConnectConnector({
         options: {
+          clientMeta: {
+            icons: ["🚀🌈"],
+            description: "A great dapp!",
+            url: "https://infini3.xyz",
+            name: "Infini3",
+          },
           qrcode: true,
           rpc: {
             [currentChain.id]: rpcUrl,

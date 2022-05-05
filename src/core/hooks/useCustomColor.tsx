@@ -10,10 +10,7 @@ function useCustomColor() {
     colors.neutralLighter,
     colors.neutralDarker
   );
-  const accentColor = useColorModeValue(
-    colors.accentLight[500],
-    colors.accentDark[500]
-  );
+  const accentColor = useColorModeValue(colors.accent[500], colors.accent[500]);
   const coloredText = useColorModeValue(
     colors.neutralDark,
     colors.neutralLight

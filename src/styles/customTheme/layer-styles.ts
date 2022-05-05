@@ -6,16 +6,16 @@ const layerStyles = {
   "gradient-border": {
     p: "2px",
     borderRadius: borderRadius,
-    bgGradient: `linear(to-r, gray.300, ${colors.accentDark[500]}, ${colors.primary[500]})`,
+    bgGradient: `linear(to-r, gray.300, ${colors.accent[500]}, ${colors.primary[500]})`,
   },
   "gradient-bg": {
-    bgGradient: `linear(to-r, gray.300, ${colors.accentDark[500]}, ${colors.primary[500]})`,
+    bgGradient: `linear(to-r, gray.300, ${colors.accent[500]}, ${colors.primary[500]})`,
     // _hover: {
-    //   bgGradient: `linear(to-r, gray.300, ${colors.accentDark[500]}, ${colors.primary[500]})`,
+    //   bgGradient: `linear(to-r, gray.300, ${colors.accent[500]}, ${colors.primary[500]})`,
     // },
   },
   "gradient-text": {
-    bgGradient: `linear(to-r, gray.300, ${colors.accentDark[500]}, ${colors.primary[500]})`,
+    bgGradient: `linear(to-r, gray.300, ${colors.accent[500]}, ${colors.primary[500]})`,
     bgClip: "text",
   },
   "solid-card": {

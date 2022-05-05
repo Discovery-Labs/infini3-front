@@ -13,13 +13,7 @@ function ConnectButton({ w }: { w?: string }) {
     <HStack>
       {account?.address ? (
         <>
-          <Address
-            address={account?.address}
-            value={account?.address}
-            logout={disconnect}
-            fontSize="18px"
-            size="short"
-          />
+          <Address fontSize="18px" size="short" />
           <IconButton
             display={["none", "none", "inherit"]}
             aria-label="exit"
