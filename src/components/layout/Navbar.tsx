@@ -17,14 +17,12 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import useCustomColor from "../../core/hooks/useCustomColor";
 import ConnectButton from "../Buttons/ConnectButton";
 import ThemeToggle from "../Buttons/ThemeToggle";
 import ScaffoldIcon from "../Icons/ScaffoldIcon";
 
 const LinkItem = ({ href, children, ...props }: any) => {
   const { pathname } = useRouter();
-  const { accentColor } = useCustomColor();
 
   let isActive = false;
   if (href === pathname) {
@@ -33,7 +31,7 @@ const LinkItem = ({ href, children, ...props }: any) => {
 
   return (
     <NextLink href={href}>
-      <Link color={isActive ? accentColor : ""} {...props}>
+      <Link color={isActive ? "accent" : ""} {...props}>
         {children}
       </Link>
     </NextLink>
@@ -53,7 +51,6 @@ const LinkItems = () => {
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { accentColor } = useCustomColor();
 
   return (
     <Box as="nav" w="100%" top="0" zIndex={1}>
@@ -64,7 +61,7 @@ const Navbar = () => {
             <Link
               display={{ base: "none", md: "flex" }}
               fontWeight="bold"
-              color={accentColor}
+              color="accent"
               textTransform="uppercase"
               size="md"
             >

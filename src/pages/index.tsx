@@ -14,7 +14,6 @@ import { useAccount, useBalance, useContractWrite, useNetwork } from "wagmi";
 import { MotionBox } from "../components/motion/Box";
 import ABIS from "@infini3/hardhat-ts";
 import { hexToString } from "../core/helpers";
-import useCustomColor from "../core/hooks/useCustomColor";
 import { useCallback, useEffect, useState } from "react";
 
 const Home = () => {
@@ -33,7 +32,6 @@ const Home = () => {
   const { data: balance, refetch } = useBalance({
     addressOrName: account?.address,
   });
-  const { coloredText, accentColor } = useCustomColor();
 
   const blockExplorerLink = useCallback(
     (txHash: string, explorer?: string) => {
@@ -109,7 +107,7 @@ const Home = () => {
   return (
     <VStack>
       <HStack align="center" w="full">
-        <Heading color={accentColor}>Adventurers</Heading>
+        <Heading color="accent">Adventurers</Heading>
       </HStack>
       <Text textStyle="h2">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos
@@ -117,7 +115,7 @@ const Home = () => {
         adipisci officia amet quam architecto, commodi deserunt neque debitis
         porro non iusto asperiores molestiae!
       </Text>
-      <Text color={coloredText}>
+      <Text color="text-weak">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos
         esse rerum doloremque eligendi tenetur reprehenderit consequuntur
         adipisci officia amet quam architecto, commodi deserunt neque debitis

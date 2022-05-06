@@ -20,7 +20,6 @@ import {
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
-import useCustomColor from "core/hooks/useCustomColor";
 import { useCallback } from "react";
 import Blockies from "react-blockies";
 import { MdCheckCircle, MdContentCopy, MdExitToApp } from "react-icons/md";
@@ -58,7 +57,6 @@ function Address({
   const { data: ensName } = useEnsName({ address: account?.address });
   const { hasCopied, onCopy } = useClipboard(account?.address || "");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { coloredText } = useCustomColor();
   if (!account?.address || isLoading) {
     return (
       <Box padding="6" as="span">
@@ -154,7 +152,7 @@ function Address({
           <ModalCloseButton />
           <ModalBody>
             Connected with MetaMask
-            <Text textStyle="small" color={coloredText}>
+            <Text textStyle="small" color="text-weak">
               You can copy the address or view on explorer
             </Text>
             <HStack
