@@ -41,9 +41,11 @@ import {
   useDisclosure,
   VStack,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 
 const Elements = () => {
+  const toast = useToast();
   const { colorMode, toggleColorMode } = useColorMode();
 
   const { isOpen, onOpen, onClose } = useDisclosure();

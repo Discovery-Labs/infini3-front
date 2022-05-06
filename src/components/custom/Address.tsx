@@ -21,10 +21,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useCustomColor from "core/hooks/useCustomColor";
+import { useCallback } from "react";
 import Blockies from "react-blockies";
 import { MdCheckCircle, MdContentCopy, MdExitToApp } from "react-icons/md";
 import { RiExternalLinkFill } from "react-icons/ri";
-import { useAccount, useDisconnect, useEnsName } from "wagmi";
+import { useAccount, useDisconnect, useEnsName, useNetwork } from "wagmi";
 
 function Address({
   size = "long",
@@ -41,8 +42,17 @@ function Address({
   fontSize?: string;
   blockiesScale?: number;
 }) {
-  const blockExplorerLink = (address: string, explorer?: string) =>
-    `${explorer || "https://etherscan.io/"}${"address/"}${address}`;
+  const { activeChain } = useNetwork();
+  const blockExplorerLink = useCallback(
+    (address: string, explorer?: string) => {
+      const currExplorer =
+        activeChain?.id === 1
+          ? `https://etherscan.io/address/`
+          : `https://${activeChain?.name}.etherscan.io/address/`;
+      return `${explorer || currExplorer}${address}`;
+    },
+    [activeChain]
+  );
   const { disconnect } = useDisconnect();
   const { data: account, isLoading } = useAccount();
   const { data: ensName } = useEnsName({ address: account?.address });
