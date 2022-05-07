@@ -1,6 +1,5 @@
 import { Text, Heading, VStack, Box } from "@chakra-ui/react";
-
-import ConnectButton from "../Buttons/ConnectButton";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function NotConnectedCard() {
   return (
