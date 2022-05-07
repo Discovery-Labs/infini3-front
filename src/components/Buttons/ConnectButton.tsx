@@ -2,7 +2,7 @@ import { Button, HStack, Skeleton, IconButton } from "@chakra-ui/react";
 import { IoMdExit } from "react-icons/io";
 import { useConnect, useDisconnect } from "wagmi";
 
-import Address from "../custom/Address";
+import Address from "../Address";
 
 function ConnectButton({ w }: { w?: string }) {
   const { connect, connectors, isConnected, isConnecting } = useConnect();

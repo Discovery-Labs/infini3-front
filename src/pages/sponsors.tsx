@@ -2,7 +2,7 @@ import { RepeatIcon } from "@chakra-ui/icons";
 import { Heading, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { useAccount, useBalance } from "wagmi";
 
-import { hexToString } from "../core/helpers";
+import { hexToString } from "../core/utils/helpers";
 
 const Home = () => {
   const { data: account } = useAccount();

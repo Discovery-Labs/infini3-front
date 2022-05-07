@@ -30,8 +30,8 @@ class MyDocument extends Document {
     ctx.renderPage = () =>
       originalRenderPage({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        enhanceApp: (App: any) => (props) =>
-          <App emotionCache={cache} {...props} />,
+        // eslint-disable-next-line react/display-name
+        enhanceApp: (App: any) => (props) => <App {...props} />,
       });
 
     const initialProps = await Document.getInitialProps(ctx);
@@ -73,11 +73,11 @@ class MyDocument extends Document {
 
           {/* add your own app-icon */}
           {/* <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/icons/apple-touch-icon.png"
-          />
-          <link rel="shortcut icon" href="/app-icon.png" /> */}
+             rel="apple-touch-icon"
+             sizes="180x180"
+             href="/icons/apple-touch-icon.png"
+           />
+           <link rel="shortcut icon" href="/app-icon.png" /> */}
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>

@@ -13,7 +13,7 @@ import {
 import { useAccount, useBalance, useContractWrite, useNetwork } from "wagmi";
 import { MotionBox } from "../components/motion/Box";
 import ABIS from "@infini3/hardhat-ts";
-import { hexToString } from "../core/helpers";
+import { hexToString } from "../core/utils/helpers";
 import { useCallback, useEffect, useState } from "react";
 
 const Home = () => {
