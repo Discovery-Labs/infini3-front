@@ -19,7 +19,7 @@ const useStore = create<AdventureState>((set) => ({
   adventureState: AdventureEnum.connectWallet,
   setAdventureState: (adventureState) =>
     set((state) => ({ ...state, adventureState })),
-  progress: 10,
+  progress: 0,
   setProgress: (progress) => set((state) => ({ ...state, progress })),
 }));
 

@@ -37,7 +37,7 @@ const Adventure: NextPage = () => {
           icon={<CloseIcon />}
           aria-label={"Back"}
         />
-        <Progress w="full" value={progress} />
+        <Progress hasStripe isAnimated w="full" value={progress} />
       </HStack>
       {views[adventureState]()}
     </VStack>
