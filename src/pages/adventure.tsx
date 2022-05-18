@@ -1,23 +1,47 @@
-import useStore from "core/states";
+import { CloseIcon } from "@chakra-ui/icons";
+import { HStack, IconButton, Progress, VStack } from "@chakra-ui/react";
+import useStore, { AdventureEnum } from "core/states";
 import type { NextPage } from "next";
+import router from "next/router";
+import { useEffect } from "react";
 import ConnectView from "views/ConnectView";
+import LiquidityView from "views/LiquidityView";
 import MintAdventurerView from "views/MintAdventurerView";
 import MintTokenView from "views/MintTokenView";
 import SwapView from "views/SwapView";
-import LiquidityView from "views/LiquidityView";
 
 const Adventure: NextPage = () => {
-  const { adventureState } = useStore();
+  const { adventureState, progress } = useStore();
+
+  const loadView = () => {
+    console.log("load view");
+  };
+  useEffect(() => {
+    loadView();
+  }, []);
 
   const views = {
-    connectWallet: () => <ConnectView />,
-    mintAdventurer: () => <MintAdventurerView />,
-    mintToken: () => <MintTokenView />,
-    swap: () => <SwapView />,
-    liquidity: () => <LiquidityView />,
+    [AdventureEnum.connectWallet]: () => <ConnectView />,
+    [AdventureEnum.mintAdventurer]: () => <MintAdventurerView />,
+    [AdventureEnum.mintToken]: () => <MintTokenView />,
+    [AdventureEnum.swap]: () => <SwapView />,
+    [AdventureEnum.liquidity]: () => <LiquidityView />,
   };
 
-  return <div>{views[adventureState]()}</div>;
+  return (
+    <VStack h="inherit">
+      <HStack w="full">
+        <IconButton
+          onClick={() => router.push("./")}
+          variant="ghost"
+          icon={<CloseIcon />}
+          aria-label={"Back"}
+        />
+        <Progress w="full" value={progress} />
+      </HStack>
+      {views[adventureState]()}
+    </VStack>
+  );
 };
 
 export default Adventure;
