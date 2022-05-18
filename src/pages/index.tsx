@@ -16,8 +16,10 @@ import ABIS from "@infini3/hardhat-ts";
 import { hexToString } from "../core/utils/helpers";
 import { useCallback, useEffect, useState } from "react";
 import router from "next/router";
+import useSound from "use-sound";
 
 const Home = () => {
+  const [play] = useSound("/sounds/click.mp3");
   const toast = useToast();
   const { data: account } = useAccount();
   const { activeChain } = useNetwork();
@@ -144,7 +146,12 @@ const Home = () => {
         </Button>
       </MotionBox>
 
-      <Button onClick={() => router.push("./adventure")}>
+      <Button
+        onClick={() => {
+          play();
+          router.push("./adventure");
+        }}
+      >
         Start the Adventure
       </Button>
 
