@@ -68,9 +68,9 @@ const Navbar = () => {
               Infini3
             </Link>
           </NextLink>
-          <HStack px="2" spacing="4" display={{ base: "none", lg: "flex" }}>
+          {/* <HStack px="2" spacing="4" display={{ base: "none", lg: "flex" }}>
             <LinkItems />
-          </HStack>
+          </HStack> */}
         </HStack>
 
         <HStack marginLeft="auto">
