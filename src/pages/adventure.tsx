@@ -1,5 +1,11 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { HStack, IconButton, Progress, VStack } from "@chakra-ui/react";
+import {
+  Container,
+  HStack,
+  IconButton,
+  Progress,
+  VStack,
+} from "@chakra-ui/react";
 import useStore, { AdventureEnum } from "core/states";
 import type { NextPage } from "next";
 import router from "next/router";
@@ -27,20 +33,24 @@ const Adventure: NextPage = () => {
     [AdventureEnum.swap]: () => <SwapView />,
     [AdventureEnum.liquidity]: () => <LiquidityView />,
   };
-
   return (
-    <VStack h="inherit">
-      <HStack w="full">
-        <IconButton
-          onClick={() => router.push("./")}
-          variant="ghost"
-          icon={<CloseIcon />}
-          aria-label={"Back"}
-        />
-        <Progress hasStripe isAnimated w="full" value={progress} />
-      </HStack>
-      {views[adventureState]()}
-    </VStack>
+    <>
+      <Container maxW="container.lg">
+        <HStack w="full">
+          <IconButton
+            onClick={() => router.push("./")}
+            variant="ghost"
+            icon={<CloseIcon />}
+            aria-label={"Back"}
+          />
+          <Progress hasStripe isAnimated w="full" value={progress} />
+        </HStack>
+      </Container>
+
+      <VStack flex="1" justify="space-between">
+        {views[adventureState]()}
+      </VStack>
+    </>
   );
 };
 
