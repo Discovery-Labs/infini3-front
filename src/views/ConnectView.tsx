@@ -1,5 +1,14 @@
 // Set the value
-import { Button, Heading, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Spacer,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
@@ -25,36 +34,69 @@ const ConnectView = () => {
   }, [isCompleted]);
 
   return (
-    <VStack h="inherit" justify="space-between" maxW="xl">
-      <Heading pt="4" textAlign="center">
-        Connect your wallet
-      </Heading>
+    <>
+      <Container maxW="container.lg">
+        <Heading pt="4" textAlign="center">
+          Connect your wallet
+        </Heading>
+      </Container>
 
-      {activeConnector ? (
-        <Stack layerStyle="solid-card" align="center" spacing={8}>
-          <Text>Connected to {activeConnector.name}</Text>
-        </Stack>
-      ) : (
-        <Stack layerStyle="solid-card" align="center" spacing={8}>
-          <Text>Connect your wallet</Text>
-          <ConnectButton />
-        </Stack>
-      )}
+      <Container maxW="container.lg">
+        <Flex w="full" justify="center">
+          {activeConnector ? (
+            <Stack layerStyle="solid-card" align="center" spacing={8}>
+              <Text>Connected to {activeConnector.name}</Text>
+            </Stack>
+          ) : (
+            <Stack layerStyle="solid-card" align="center" spacing={8}>
+              <Text>Connect your wallet</Text>
+              <ConnectButton />
+            </Stack>
+          )}
+        </Flex>
+      </Container>
 
-      <Stack w="full" bg="accent">
-        {isCompleted && <Text>Nicely done</Text>}
-        <Button
+      <Box position="relative" height="120px" w="full">
+        <Stack
           w="full"
-          disabled={!isCompleted}
-          onClick={() => {
-            playClick();
-            setAdventureState(AdventureEnum.mintAdventurer);
-          }}
+          bg={isCompleted ? "accent" : ""}
+          py={4}
+          position="absolute"
+          bottom={0}
         >
-          Next
-        </Button>
-      </Stack>
-    </VStack>
+          <Container maxW="container.lg">
+            <Flex
+              direction={{ base: "column", md: "row" }}
+              justify="space-between"
+            >
+              {isCompleted ? (
+                <Flex>
+                  <Text color="primary" fontWeight="bold" pb="4">
+                    Nicely done!
+                  </Text>
+                  <Spacer />
+                  <Text color="primary" fontWeight="bold" pb="4">
+                    +10 xp
+                  </Text>
+                </Flex>
+              ) : (
+                <Box></Box>
+              )}
+              <Button
+                w={{ base: "full", md: "md" }}
+                disabled={!isCompleted}
+                onClick={() => {
+                  playClick();
+                  setAdventureState(AdventureEnum.mintAdventurer);
+                }}
+              >
+                Next
+              </Button>
+            </Flex>
+          </Container>
+        </Stack>
+      </Box>
+    </>
   );
 };
 
