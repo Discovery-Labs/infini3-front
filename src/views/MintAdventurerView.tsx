@@ -58,8 +58,13 @@ const MintAdventurerView = () => {
   }, [isCompleted]);
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess && !isTxPending) {
       setIsCompleted(true);
+    }
+  }, [isTxPending, isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess && data) {
       toast({
         title: (
           <Link
@@ -128,31 +133,39 @@ const MintAdventurerView = () => {
 
       <Container maxW="container.lg">
         <Flex w="full" justify="center">
-          <MotionBox
-            animate={{ y: 20 }}
-            py="10"
-            transition={{
-              repeat: Infinity,
-              duration: 8,
-              repeatType: "reverse",
-            }}
-            margin="0 auto"
-          >
-            <Button
-              size="lg"
-              colorScheme="accent"
-              fontFamily="orbitron"
-              fontSize="2xl"
-              fontWeight="extrabold"
-              onClick={handleAdventurerMint}
-              isLoading={isLoading || isTxPending}
-              loadingText={
-                isLoading ? "Minting adventurer" : "Transaction pending.."
-              }
+          {isCompleted ? (
+            <>
+              <Stack layerStyle="solid-card" align="center" spacing={8}>
+                <Text>You have successfully minted the Adventurer NFT</Text>
+              </Stack>
+            </>
+          ) : (
+            <MotionBox
+              animate={{ y: 20 }}
+              py="10"
+              transition={{
+                repeat: Infinity,
+                duration: 8,
+                repeatType: "reverse",
+              }}
+              margin="0 auto"
             >
-              Mint adventurer
-            </Button>
-          </MotionBox>
+              <Button
+                size="lg"
+                colorScheme="accent"
+                fontFamily="orbitron"
+                fontSize="2xl"
+                fontWeight="extrabold"
+                onClick={handleAdventurerMint}
+                isLoading={isLoading || isTxPending}
+                loadingText={
+                  isLoading ? "Minting adventurer" : "Transaction pending.."
+                }
+              >
+                Mint adventurer
+              </Button>
+            </MotionBox>
+          )}
         </Flex>
       </Container>
 
@@ -187,7 +200,7 @@ const MintAdventurerView = () => {
                 disabled={!isCompleted}
                 onClick={() => {
                   playClick();
-                  setAdventureState(AdventureEnum.mintAdventurer);
+                  setAdventureState(AdventureEnum.mintToken);
                 }}
               >
                 Next
