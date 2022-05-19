@@ -1,4 +1,3 @@
-// Set the value
 import {
   Box,
   Button,
@@ -29,7 +28,7 @@ const ConnectView = () => {
   useEffect(() => {
     if (isCompleted) {
       playYay();
-      setProgress(10);
+      setProgress(20);
     }
   }, [isCompleted]);
 

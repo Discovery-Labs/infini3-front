@@ -1,4 +1,3 @@
-// Set the value
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -53,7 +52,7 @@ const MintAdventurerView = () => {
   useEffect(() => {
     if (isCompleted) {
       playYay();
-      setProgress(20);
+      setProgress(40);
     }
   }, [isCompleted]);
 
@@ -162,7 +161,7 @@ const MintAdventurerView = () => {
                   isLoading ? "Minting adventurer" : "Transaction pending.."
                 }
               >
-                Mint adventurer
+                Mint adventurer NFT
               </Button>
             </MotionBox>
           )}
