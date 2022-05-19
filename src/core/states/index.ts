@@ -4,6 +4,7 @@ export enum AdventureEnum {
   connectWallet = "connectWallet",
   mintAdventurer = "mintAdventurer",
   mintToken = "mintToken",
+  stake = "stake",
   swap = "swap",
   liquidity = "liquidity",
 }
