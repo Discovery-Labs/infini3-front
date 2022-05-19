@@ -35,7 +35,7 @@ const Adventure: NextPage = () => {
   };
   return (
     <>
-      <Container maxW="container.lg">
+      <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <HStack w="full">
           <IconButton
             onClick={() => router.push("./")}
