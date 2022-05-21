@@ -1,18 +1,29 @@
 import {
+  Box,
   Button,
   Center,
   Container,
   Heading,
   HStack,
   Text,
+  Image,
+  VStack,
 } from "@chakra-ui/react";
 import router from "next/router";
 import useSound from "use-sound";
 import { MotionBox } from "../components/motion/Box";
 import transakSDK from "@transak/transak-sdk";
+import useNFTMetadata from "core/hooks/useNFTMetadata";
 
 const Home = () => {
   const [play] = useSound("/sounds/click.mp3");
+  const { tokenName, tokenImageURL } = useNFTMetadata({
+    chainId: 80001,
+    address: "0xb88dAe5aD16bD29384284f42905198a988Fcf8e2",
+    tokenId: 0,
+  });
+  console.log({ tokenName, tokenImageURL });
+
   // const { data: balance, refetch } = useBalance({
   //   addressOrName: account?.address,
   // });
@@ -63,8 +74,12 @@ const Home = () => {
           adipisci officia amet quam architecto, commodi deserunt neque debitis
           porro non iusto asperiores molestiae!
         </Text>
-        <Button onClick={transak}>Transak</Button>
-        <Center>
+        <VStack>
+          <Text>{tokenName}</Text>
+          <Image borderRadius="lg" src={tokenImageURL} />
+        </VStack>
+
+        <Center flexDirection="column">
           <MotionBox
             animate={{ y: 20 }}
             py="10"
@@ -89,6 +104,12 @@ const Home = () => {
               Start the Adventure
             </Button>
           </MotionBox>
+          <Box width="fit-content">
+            <VStack layerStyle="solid-card">
+              <Text>Buy crypto with fiat</Text>
+              <Button onClick={transak}>Transak</Button>
+            </VStack>
+          </Box>
         </Center>
         {/* 
         <HStack>
