@@ -37,6 +37,7 @@
     "@fontsource/space-mono": "^4.5.8",
     "@infini3/hardhat-ts": "^0.2.1",
     "@rainbow-me/rainbowkit": "^0.1.0",
+    "@transak/transak-sdk": "^1.0.31",
     "chakra-ui-steps": "^1.7.3",
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.6.5",
