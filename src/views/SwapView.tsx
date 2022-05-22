@@ -12,6 +12,13 @@ import {
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
+// import { SwapWidget } from "@uniswap/widgets";
+import "@uniswap/widgets/fonts.css";
+// import { providers } from "ethers";
+
+// Infura endpoint
+// const jsonRpcEndpoint =
+//   "https://mainnet.infura.io/v3/5b0905fa75c540e4a2b04e3966e2a325";
 
 const SwapView = () => {
   const [playYay] = useSound("/sounds/yay.mp3");
@@ -44,6 +51,11 @@ const SwapView = () => {
             </>
           ) : (
             <VStack>
+              {/* https://github.com/Uniswap/interface/issues/3674 */}
+              {/* <SwapWidget
+                provider={provider}
+                jsonRpcEndpoint={jsonRpcEndpoint}
+              /> */}
               <Button onClick={() => setIsCompleted(true)}>Swap token</Button>
             </VStack>
           )}

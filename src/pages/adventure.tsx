@@ -23,7 +23,7 @@ const Adventure: NextPage = () => {
   const loadView = () => {
     console.log("load view");
     // TODO Check if wallet is connected, NFT is minted, token is bought, have done a swap, have staked
-    setAdventureState(AdventureEnum.connectWallet);
+    setAdventureState(AdventureEnum.swap);
   };
   useEffect(() => {
     loadView();

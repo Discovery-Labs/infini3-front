@@ -22,7 +22,6 @@ const Home = () => {
     address: "0xb88dAe5aD16bD29384284f42905198a988Fcf8e2",
     tokenId: 0,
   });
-  console.log({ tokenName, tokenImageURL });
 
   // const { data: balance, refetch } = useBalance({
   //   addressOrName: account?.address,
