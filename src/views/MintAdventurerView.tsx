@@ -101,7 +101,7 @@ const MintAdventurerView = () => {
     if (isError) {
       toast({
         title: error?.message,
-        description: error?.cause,
+        description: error?.cause?.message,
         status: "error",
         position: "bottom-right",
         duration: 6000,

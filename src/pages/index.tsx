@@ -62,16 +62,8 @@ const Home = () => {
           <Heading color="accent">Adventurers</Heading>
         </HStack>
         <Text textStyle="h2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos
-          esse rerum doloremque eligendi tenetur reprehenderit consequuntur
-          adipisci officia amet quam architecto, commodi deserunt neque debitis
-          porro non iusto asperiores molestiae!
-        </Text>
-        <Text color="text-weak">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos
-          esse rerum doloremque eligendi tenetur reprehenderit consequuntur
-          adipisci officia amet quam architecto, commodi deserunt neque debitis
-          porro non iusto asperiores molestiae!
+          Get your crypto adventure started and build your future me by learning
+          and completing quests!
         </Text>
         <VStack>
           <Text>{tokenName}</Text>
