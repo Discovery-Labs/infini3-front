@@ -61,6 +61,7 @@ const Elements = () => {
           <Button variant="solid">Hello</Button>
           <Button variant="outline">Hello</Button>
           <Button variant="ghost">Hello</Button>
+          <Button colorScheme="blue">Hello</Button>
           <Input />
           <Select placeholder="Select option" />
           <Textarea placeholder="Select option" />

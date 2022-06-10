@@ -1,25 +1,28 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ChakraProvider } from "@chakra-ui/react";
 import { EmotionCache } from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
+import { CacheProvider, css, Global } from "@emotion/react";
 import "@fontsource/orbitron";
-import "@fontsource/poppins";
 import "@fontsource/space-mono";
 import ConnectProvider from "core/providers/ConnectProvider";
 import Layout from "layouts";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { customTheme } from "@discovery-dao/infini-ui";
 import createEmotionCache from "styles/createEmotionCache";
-import theme from "styles/customTheme";
 import "styles/globals.css";
 import defaultSEOConfig from "../../next-seo.config";
+import { generateBreakpointTypographyCssVars } from "../tw-components/utils/typography";
 
 const clientSideEmotionCache = createEmotionCache();
+
+const fontSizeCssVars = generateBreakpointTypographyCssVars();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+
 const MyApp = ({
   Component,
   pageProps,
@@ -28,7 +31,12 @@ const MyApp = ({
   return (
     <ConnectProvider>
       <CacheProvider value={emotionCache}>
-        <ChakraProvider theme={theme}>
+        <ChakraProvider theme={customTheme}>
+          <Global
+            styles={css`
+              ${fontSizeCssVars}
+            `}
+          />
           <Head>
             <meta
               name="viewport"

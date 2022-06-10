@@ -1,12 +1,12 @@
 import create from "zustand";
 
+export type ViewsProps = {
+  [AdventureEnum: string]: () => JSX.Element;
+};
+
 export enum AdventureEnum {
-  connectWallet = "connectWallet",
-  mintAdventurer = "mintAdventurer",
-  mintToken = "mintToken",
-  stake = "stake",
-  swap = "swap",
-  liquidity = "liquidity",
+  StepOne = "StepOne",
+  NextSteps = "NextSteps",
 }
 
 interface AdventureState {
@@ -17,7 +17,7 @@ interface AdventureState {
 }
 
 const useStore = create<AdventureState>((set) => ({
-  adventureState: AdventureEnum.connectWallet,
+  adventureState: AdventureEnum.StepOne,
   setAdventureState: (adventureState) =>
     set((state) => ({ ...state, adventureState })),
   progress: 0,

@@ -1,52 +1,51 @@
+import "@rainbow-me/rainbowkit/styles.css";
 import {
-  apiProvider,
-  configureChains,
   getDefaultWallets,
-  lightTheme,
+  midnightTheme,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import "@rainbow-me/rainbowkit/styles.css";
-import { chain, createClient, WagmiProvider } from "wagmi";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID;
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon, chain.rinkeby, chain.polygonMumbai],
+  [alchemyProvider({ alchemyId }), publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: "dCompass: Learn Web3",
+  chains,
+});
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const ConnectProvider = ({ children }: Props) => {
-  const { chains, provider } = configureChains(
-    [chain.mainnet, chain.polygon, chain.rinkeby, chain.arbitrum],
-    [apiProvider.alchemy(process.env.ALCHEMY_ID), apiProvider.fallback()]
-  );
-
-  const { connectors } = getDefaultWallets({
-    appName: "Infini3",
-    chains,
-  });
-
-  const wagmiClient = createClient({
-    autoConnect: true,
-    connectors,
-    provider,
-  });
-
   return (
-    <WagmiProvider client={wagmiClient}>
+    <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider
-        appInfo={{
-          appName: "Infini3",
-          learnMoreUrl: "https://infini3.xyz",
-        }}
         chains={chains}
-        theme={lightTheme({
+        theme={midnightTheme({
           accentColor: "#02e2ac",
           accentColorForeground: "black",
           borderRadius: "small",
+          overlayBlur: "small",
           fontStack: "system",
         })}
       >
         {children}
       </RainbowKitProvider>
-    </WagmiProvider>
+    </WagmiConfig>
   );
 };
 

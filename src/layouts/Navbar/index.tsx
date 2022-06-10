@@ -9,6 +9,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
+  Icon,
   IconButton,
   Link,
   useDisclosure,
@@ -18,9 +19,9 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import ThemeToggle from "../../components/Buttons/ThemeToggle";
-import ScaffoldIcon from "../../components/Icons/ScaffoldIcon";
-
+import ThemeToggle from "components/buttons/ThemeToggle";
+import { FiExternalLink } from "react-icons/fi";
+Link;
 const LinkItem = ({ href, children, ...props }: any) => {
   const { pathname } = useRouter();
 
@@ -31,20 +32,32 @@ const LinkItem = ({ href, children, ...props }: any) => {
 
   return (
     <NextLink href={href}>
-      <Link color={isActive ? "accent" : ""} {...props}>
+      <Link
+        _hover={{ textDecoration: "none", color: "primary" }}
+        color={isActive ? "accent" : ""}
+        {...props}
+      >
         {children}
       </Link>
     </NextLink>
   );
 };
-
 const LinkItems = () => {
   return (
     <>
-      <LinkItem href="/">Adventurers</LinkItem>
-      <LinkItem href="/sponsors">Sponsors</LinkItem>
+      <LinkItem href="/">Adventure</LinkItem>
       <LinkItem href="/example">ExampleUI</LinkItem>
-      <LinkItem href="/subgraph">Subgraph</LinkItem>
+      <Link
+        display="inline-flex"
+        alignItems="center"
+        gap="2"
+        isExternal
+        href="https://github.com/Discovery-Labs/"
+        _hover={{ textDecoration: "none", color: "primary" }}
+      >
+        Github
+        <Icon as={FiExternalLink} />
+      </Link>
     </>
   );
 };
@@ -56,33 +69,37 @@ const Navbar = () => {
     <Box as="nav" w="100%" top="0" zIndex={1}>
       <Container display="flex" p={2} maxW="7xl" alignItems="center">
         <HStack>
-          <ScaffoldIcon size="36px" />
           <NextLink href="/">
             <Link
-              display={{ base: "none", md: "flex" }}
+              flex="none"
               fontWeight="bold"
               color="accent"
               textTransform="uppercase"
               size="md"
+              _hover={{
+                textDecoration: "none",
+                color: "primary",
+                transform: "rotate(-5deg)",
+              }}
             >
-              Infini3
+              dCompass quest
             </Link>
           </NextLink>
-          {/* <HStack px="2" spacing="4" display={{ base: "none", lg: "flex" }}>
+          <HStack px="2" spacing="4" display={{ base: "none", md: "flex" }}>
             <LinkItems />
-          </HStack> */}
+          </HStack>
         </HStack>
 
         <HStack marginLeft="auto">
           <ConnectButton />
-          <ThemeToggle />
+          <ThemeToggle display={{ base: "none", md: "flex" }} />
           <IconButton
             size="md"
             px="2"
             mr="2"
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label="Open Menu"
-            display={{ lg: "none" }}
+            display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
         </HStack>
@@ -97,6 +114,7 @@ const Navbar = () => {
             <DrawerBody>
               <VStack onClick={onClose} align="start" fontSize="lg" spacing="4">
                 <LinkItems />
+                <ThemeToggle display={{ base: "flex", md: "none" }} />
               </VStack>
             </DrawerBody>
           </DrawerContent>

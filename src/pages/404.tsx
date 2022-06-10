@@ -1,7 +1,10 @@
-import { Box, Button, Heading, Image } from "@chakra-ui/react";
+import { Box, Button, chakra, Heading, Image } from "@chakra-ui/react";
+import { isValidMotionProp, motion } from "framer-motion";
 import Link from "next/link";
 
-import { MotionBox } from "components/motion/Box";
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: isValidMotionProp,
+});
 
 const Page404 = () => {
   return (
@@ -9,7 +12,6 @@ const Page404 = () => {
       <MotionBox
         animate={{ y: 20 }}
         pt="10"
-        transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
         width={["100%", "70%", "60%", "60%"]}
         margin="0 auto"
       >

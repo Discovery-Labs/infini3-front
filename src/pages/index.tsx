@@ -1,120 +1,73 @@
 import {
   Box,
-  Button,
-  Center,
   Container,
-  Heading,
-  HStack,
-  Text,
+  Flex,
   Image,
+  SimpleGrid,
   VStack,
+  chakra,
 } from "@chakra-ui/react";
-import router from "next/router";
-import useSound from "use-sound";
-import { MotionBox } from "../components/motion/Box";
-import transakSDK from "@transak/transak-sdk";
-import useNFTMetadata from "core/hooks/useNFTMetadata";
+import { FaRocket } from "react-icons/fa";
+import { Heading, LinkButton } from "tw-components";
+import { motion, isValidMotionProp } from "framer-motion";
+
+const ChakraBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
 
 const Home = () => {
-  const [play] = useSound("/sounds/click.mp3");
-  const { tokenName, tokenImageURL } = useNFTMetadata({
-    chainId: 80001,
-    address: "0xb88dAe5aD16bD29384284f42905198a988Fcf8e2",
-    tokenId: 0,
-  });
-
-  // const { data: balance, refetch } = useBalance({
-  //   addressOrName: account?.address,
-  // });
-
-  const transak = () => {
-    const transak = new transakSDK({
-      apiKey: "52b93ced-3d40-4244-9bb4-61692ba0cb1c", // Your API Key (Required)
-      environment: "STAGING", // STAGING/PRODUCTION (Required)
-      defaultCryptoCurrency: "ETH",
-      walletAddress: "", // Your customer wallet address
-      email: "", // Your customer email address (Optional)
-      redirectURL: "",
-      hostURL: window.location.origin, // Required field
-      widgetHeight: "625px",
-      widgetWidth: "500px",
-    });
-
-    transak.init();
-
-    // This will trigger when the user closed the widget
-    transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, (orderData: any) => {
-      console.log({ orderData });
-      transak.close();
-    });
-
-    // This will trigger when the user marks payment is made.
-    transak.on(transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL, (orderData: any) => {
-      console.log({ orderData });
-      transak.close();
-    });
-  };
-
+  FaRocket;
   return (
-    <>
+    <VStack flex="1" justify="center">
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
-        <HStack align="center" w="full">
-          <Heading color="accent">Adventurers</Heading>
-        </HStack>
-        <Text textStyle="h2">
-          Get your crypto adventure started and build your future me by learning
-          and completing quests!
-        </Text>
-        <VStack>
-          <Text>{tokenName}</Text>
-          <Image borderRadius="lg" src={tokenImageURL} />
-        </VStack>
-
-        <Center flexDirection="column">
-          <MotionBox
-            animate={{ y: 20 }}
-            py="10"
-            transition={{
-              repeat: Infinity,
-              duration: 8,
-              repeatType: "reverse",
-            }}
-            margin="0 auto"
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 6, md: 8 }}>
+          <Flex
+            flexDir="column"
+            gap={{ base: 6, md: 8 }}
+            align={{ base: "center", md: "start" }}
           >
-            <Button
-              size="lg"
-              colorScheme="accent"
-              fontFamily="orbitron"
-              fontSize="2xl"
-              fontWeight="extrabold"
-              onClick={() => {
-                play();
-                router.push("./adventure");
-              }}
+            <Heading
+              as="h2"
+              size="display.md"
+              textAlign={{ base: "center", md: "left" }}
             >
-              Start the Adventure
-            </Button>
-          </MotionBox>
-          <Box width="fit-content">
-            <VStack layerStyle="solid-card">
-              <Text>Buy crypto with fiat</Text>
-              <Button onClick={transak}>Transak</Button>
-            </VStack>
-          </Box>
-        </Center>
-        {/* 
-        <HStack>
-          <Text>
-            Your Balance: {balance?.value ? hexToString(balance?.value) : "0"}Ξ
-          </Text>
-          <IconButton
-            onClick={() => refetch()}
-            aria-label="refresh"
-            icon={<RepeatIcon />}
-          />
-        </HStack> */}
+              Start your <Box layerStyle="gradient-text">Web3</Box> Adventure
+            </Heading>
+            <Heading
+              as="h3"
+              size="subtitle.md"
+              textAlign={{ base: "center", md: "left" }}
+            >
+              Learn by completing quest.
+            </Heading>
+            <ChakraBox
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ transition: "0.1", ease: "easeOut" }}
+            >
+              <LinkButton
+                _hover={{ color: "white" }}
+                leftIcon={<FaRocket />}
+                href="/adventure"
+                layerStyle="gradient-bg"
+              >
+                Start the Adventure
+              </LinkButton>
+            </ChakraBox>
+          </Flex>
+          <Flex justifyContent="flex-end">
+            <Image
+              alt={"Hero Image"}
+              fit={"contain"}
+              align={"center"}
+              w={"100%"}
+              h={"100%"}
+              src={"assets/images/herocards.png"}
+            />
+          </Flex>
+        </SimpleGrid>
       </Container>
-    </>
+    </VStack>
   );
 };
 
