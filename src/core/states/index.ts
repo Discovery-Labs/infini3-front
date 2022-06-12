@@ -6,6 +6,9 @@ export type ViewsProps = {
 
 export enum AdventureEnum {
   StepOne = "StepOne",
+  StepTwo = "StepTwo",
+  StepThree = "StepThree",
+  StepFour = "StepFour",
   NextSteps = "NextSteps",
 }
 

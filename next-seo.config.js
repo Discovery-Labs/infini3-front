@@ -1,7 +1,7 @@
 export const appStaticContent = {
-  currentAppLink: "https://demo.scaffold-eth.io",
-  name: "Scaffold ETH",
-  description: "Bootstrap & customize your dApp in minutes",
+  currentAppLink: "https://alpha.dcompass.xyz/",
+  name: "dCompass Quest",
+  description: "The fun way to learn about web3",
 };
 
 /** @type {import('next-seo').DefaultSeoProps} */

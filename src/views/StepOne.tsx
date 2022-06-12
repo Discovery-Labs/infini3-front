@@ -1,4 +1,4 @@
-import { Button, Container, Flex, HStack, Image } from "@chakra-ui/react";
+import { Button, Container, HStack, Image } from "@chakra-ui/react";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import QuestGuide from "components/views/QuestGuide";
@@ -17,9 +17,6 @@ const StepOne = () => {
   // Quest progress and success state
   const { setProgress } = useStore();
   const [isCompleted, setIsCompleted] = useState(false);
-
-  // Verify quest completion
-  useEffect(() => {}, []);
 
   // > Set progress on complete
   useEffect(() => {
@@ -43,7 +40,7 @@ const StepOne = () => {
         <StepBody>
           {/* > Change and play with your experiments here */}
           <Image
-            alt={"Hero Image"}
+            alt={"Image"}
             fit={"contain"}
             align={"center"}
             w={"100%"}
@@ -67,7 +64,7 @@ const StepOne = () => {
 
       <BottomNextBtn
         isCompleted={isCompleted}
-        adventureState={AdventureEnum.NextSteps}
+        adventureState={AdventureEnum.StepTwo}
       />
     </>
   );

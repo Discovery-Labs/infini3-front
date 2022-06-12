@@ -14,7 +14,9 @@ const QuestGuide = ({ guide }: QuestGuideProps) => {
       <Heading size="title.lg" pt="4">
         {guide.title}
       </Heading>
-      <Text size="body.lg">{guide.description}</Text>
+      <Text size="body.lg" textAlign="center">
+        {guide.description}
+      </Text>
     </Flex>
   );
 };
