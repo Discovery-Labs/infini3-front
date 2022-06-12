@@ -1,56 +1,68 @@
-import { Container, Flex, Stack } from "@chakra-ui/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Button, Container, Flex, HStack, Image } from "@chakra-ui/react";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import QuestGuide from "components/views/QuestGuide";
+import StepBody from "components/views/StepBody";
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
-import { Text } from "tw-components";
-import { useConnect } from "wagmi";
+import { Link } from "tw-components";
 
+// > Set Guide title and description
 const guide = {
-  title: "First quest!!!",
-  description: "Welcome, prepare yourself for your first quest!",
+  title: "Prepare your art",
+  description: "Duplicate the starter, change it with your own design",
 };
 
 const StepOne = () => {
-  const { setProgress, progress } = useStore();
-  const { activeConnector } = useConnect();
+  // Quest progress and success state
+  const { setProgress } = useStore();
   const [isCompleted, setIsCompleted] = useState(false);
 
   // Verify quest completion
-  useEffect(() => {
-    setIsCompleted(activeConnector ? true : false);
-  }, [activeConnector]);
+  useEffect(() => {}, []);
 
-  // Set progress on complete
+  // > Set progress on complete
   useEffect(() => {
     if (isCompleted) {
-      setProgress(50);
+      setProgress(20);
     }
   }, [isCompleted, setProgress]);
+
+  const done = async () => {
+    setIsCompleted(true);
+  };
 
   return (
     <>
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
-        <ProgressBar progress={progress} />
+        <ProgressBar />
         <QuestGuide guide={guide} />
       </Container>
 
-      {/* Change and play with your experiments Here */}
       <Container maxW="container.lg">
-        <Flex w="full" justify="center">
-          {activeConnector ? (
-            <Stack layerStyle="solid-card" align="center" spacing={8}>
-              <Text>Connected to {activeConnector.name}</Text>
-            </Stack>
-          ) : (
-            <Stack layerStyle="solid-card" align="center" spacing={8}>
-              <Text>Connect your wallet</Text>
-              <ConnectButton />
-            </Stack>
-          )}
-        </Flex>
+        <StepBody>
+          {/* > Change and play with your experiments here */}
+          <Image
+            alt={"Hero Image"}
+            fit={"contain"}
+            align={"center"}
+            w={"100%"}
+            h={"100%"}
+            maxW="lg"
+            src={"assets/images/figma-starter.png"}
+            borderRadius="md"
+          />
+          <HStack>
+            <Link
+              isExternal
+              color="primary"
+              href="https://www.figma.com/community/file/1117742763202404226"
+            >
+              Duplicate Generative NFT starter
+            </Link>
+            <Button onClick={done}>Done</Button>
+          </HStack>
+        </StepBody>
       </Container>
 
       <BottomNextBtn

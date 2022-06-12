@@ -1,5 +1,6 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { HStack, Progress } from "@chakra-ui/react";
+import useStore from "core/states";
 import { LinkButton } from "tw-components";
 
 interface ProgressBarProps {
@@ -7,10 +8,9 @@ interface ProgressBarProps {
   hasStripe?: boolean;
 }
 
-const ProgressBar = ({
-  progress = 100,
-  hasStripe = true,
-}: ProgressBarProps) => {
+const ProgressBar = ({ hasStripe = true }: ProgressBarProps) => {
+  const { progress } = useStore();
+
   return (
     <HStack w="full">
       <LinkButton leftIcon={<CloseIcon />} variant="ghost" href="/" />
