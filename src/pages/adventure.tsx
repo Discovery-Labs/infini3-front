@@ -5,6 +5,7 @@ import { useCallback, useEffect } from "react";
 import NextSteps from "views/NextSteps";
 import StepOne from "views/StepOne";
 import StepTwo from "views/StepTwo";
+import StepThree from "views/StepThree";
 
 const Adventure: NextPage = () => {
   const { adventureState, setAdventureState } = useStore();
@@ -19,6 +20,7 @@ const Adventure: NextPage = () => {
   const views: ViewsProps = {
     [AdventureEnum.StepOne]: () => <StepOne />,
     [AdventureEnum.StepTwo]: () => <StepTwo />,
+    [AdventureEnum.StepThree]: () => <StepThree />,
     [AdventureEnum.NextSteps]: () => <NextSteps />,
   };
   return (
