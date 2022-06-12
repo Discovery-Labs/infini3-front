@@ -5,6 +5,7 @@ export type ViewsProps = {
 };
 
 export enum AdventureEnum {
+  StepZero = "StepZero",
   StepOne = "StepOne",
   StepTwo = "StepTwo",
   StepThree = "StepThree",
@@ -20,7 +21,7 @@ interface AdventureState {
 }
 
 const useStore = create<AdventureState>((set) => ({
-  adventureState: AdventureEnum.StepOne,
+  adventureState: AdventureEnum.StepZero,
   setAdventureState: (adventureState) =>
     set((state) => ({ ...state, adventureState })),
   progress: 0,

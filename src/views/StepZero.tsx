@@ -5,12 +5,12 @@ import QuestGuide from "components/views/QuestGuide";
 import StepBody from "components/views/StepBody";
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
-import { Link, Text } from "tw-components";
+import { Text } from "tw-components";
 
 // > Set Guide title and description
 const guide = {
-  title: "Prepare your art",
-  description: "Duplicate the starter, change it with your own design",
+  title: "Introduction",
+  description: "",
 };
 
 const StepOne = () => {
@@ -18,10 +18,13 @@ const StepOne = () => {
   const { setProgress } = useStore();
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // Verify quest completion
+  useEffect(() => {}, []);
+
   // > Set progress on complete
   useEffect(() => {
     if (isCompleted) {
-      setProgress(25);
+      setProgress(10);
     }
   }, [isCompleted, setProgress]);
 
@@ -39,8 +42,12 @@ const StepOne = () => {
       <Container maxW="container.lg">
         <StepBody>
           {/* > Change and play with your experiments here */}
+          <Text>
+            At the end of this adventure you are going to have your own
+            Generative NFT collection deployed with a minting website.
+          </Text>
           <Image
-            alt={"Image"}
+            alt={"Hero Image"}
             fit={"contain"}
             align={"center"}
             w={"100%"}
@@ -50,23 +57,14 @@ const StepOne = () => {
             borderRadius="md"
           />
           <HStack>
-            <Link
-              isExternal
-              color="primary"
-              href="https://www.figma.com/community/file/1117742763202404226"
-            >
-              Duplicate Generative NFT starter
-            </Link>
+            <Button onClick={done}>I am ready!</Button>
           </HStack>
-
-          <Text>Edit the parts and make it your own</Text>
-          <Button onClick={done}>Done</Button>
         </StepBody>
       </Container>
 
       <BottomNextBtn
         isCompleted={isCompleted}
-        adventureState={AdventureEnum.StepTwo}
+        adventureState={AdventureEnum.StepOne}
       />
     </>
   );

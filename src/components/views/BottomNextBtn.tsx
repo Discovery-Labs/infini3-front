@@ -51,7 +51,7 @@ const BottomNextBtn = ({
           <Button
             w="full"
             onClick={() => {
-              setAdventureState(AdventureEnum.StepOne);
+              setAdventureState(AdventureEnum.StepZero);
             }}
           >
             Restart

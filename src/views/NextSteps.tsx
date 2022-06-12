@@ -33,14 +33,10 @@ const NextSteps = () => {
             Go to Alpha
           </Link>
           <Heading size="title.sm" pt="4">
-            We are open source
+            Connect with us
           </Heading>
-          <Link
-            isExternal
-            color="primary"
-            href="https://github.com/Discovery-Labs/"
-          >
-            Open Github
+          <Link isExternal color="primary" href="https://discord.gg/UPRRAJahDa">
+            Join Discord
           </Link>
         </Flex>
       </Container>

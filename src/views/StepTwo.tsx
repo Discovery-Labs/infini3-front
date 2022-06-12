@@ -22,7 +22,7 @@ const StepTwo = () => {
   // > Set progress on complete
   useEffect(() => {
     if (isCompleted) {
-      setProgress(40);
+      setProgress(50);
     }
   }, [isCompleted, setProgress]);
 
