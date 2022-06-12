@@ -40,7 +40,7 @@ const StepTwo = () => {
       <Container maxW="container.lg">
         <StepBody>
           {/* > Change and play with your experiments here */}
-          <Heading>Clone Hashlips art engine</Heading>
+          <Heading>Hashlips art engine</Heading>
 
           <Text>Clone the repo or download it directly from github</Text>
           <CodeBlock

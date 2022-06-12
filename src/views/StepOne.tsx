@@ -5,7 +5,7 @@ import QuestGuide from "components/views/QuestGuide";
 import StepBody from "components/views/StepBody";
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
-import { Link } from "tw-components";
+import { Link, Text } from "tw-components";
 
 // > Set Guide title and description
 const guide = {
@@ -57,8 +57,10 @@ const StepOne = () => {
             >
               Duplicate Generative NFT starter
             </Link>
-            <Button onClick={done}>Done</Button>
           </HStack>
+
+          <Text>Edit the parts and make it your own</Text>
+          <Button onClick={done}>Done</Button>
         </StepBody>
       </Container>
 

@@ -5,7 +5,7 @@ import QuestGuide from "components/views/QuestGuide";
 import StepBody from "components/views/StepBody";
 import useStore, { AdventureEnum } from "core/states";
 import { useEffect, useState } from "react";
-import { CodeBlock, Heading, Link, Text } from "tw-components";
+import { Heading, Link, Text } from "tw-components";
 
 // > Set Guide title and description
 const guide = {
