@@ -59,7 +59,18 @@ const StepOne = () => {
             </Link>
           </HStack>
 
-          <Text>Edit the parts and make it your own</Text>
+          <Text>Edit the body parts and make them your own.</Text>
+          <Text>Export all the items organized into folders.</Text>
+          <Image
+            alt={"Image"}
+            fit={"contain"}
+            align={"center"}
+            w={"100%"}
+            h={"100%"}
+            maxW="lg"
+            src={"assets/images/exported.png"}
+            borderRadius="md"
+          />
           <Button onClick={done}>Done</Button>
         </StepBody>
       </Container>

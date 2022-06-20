@@ -43,8 +43,8 @@ const StepOne = () => {
         <StepBody>
           {/* > Change and play with your experiments here */}
           <Text>
-            At the end of this adventure you are going to have your own
-            Generative NFT collection deployed with a minting website.
+            At the end of this adventure, you are going to have your Generative
+            NFT collection deployed with a minting website.
           </Text>
           <Image
             alt={"Hero Image"}

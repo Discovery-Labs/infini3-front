@@ -47,7 +47,7 @@ const StepFour = () => {
           </Text>
           <Text textAlign="center">
             Go to the embed tab and copy the embed code. Paste it wherever you
-            want. If your website builder offers embed block it should be
+            want. If your website builder offers an embed block, it should be
             enough. You can also start from a template like in this example.
             Replit works on your browser so you do not need to download
             anything.

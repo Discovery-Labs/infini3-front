@@ -67,11 +67,9 @@ const StepThree = () => {
           <Heading>Upload the collection</Heading>
           <Text textAlign="center">
             In the NFT Drop contract page, use the Batch Upload button to upload
-            all the images. In the hashlips repository, move the file
-            _metadata.json from the json folder to the images folder. Turning
-            back to the upload page click the area to select files. Select all
-            the files inside images folder where we have the _metadata file and
-            all the images.
+            all the images. Click the area to select files. Select all the files
+            inside images folder where we have the _metadata file and all the
+            images.
           </Text>
 
           <Image

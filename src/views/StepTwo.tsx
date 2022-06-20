@@ -75,18 +75,16 @@ const StepTwo = () => {
             inside config.js. Install the dependencies and run generate.
           </Text>
           <CodeBlock code={"yarn install && yarn generate"} language={"bash"} />
-          <Link
-            isExternal
-            color="primary"
-            href="https://github.com/HashLips/hashlips_art_engine"
-          >
-            Open Hashlips Github repo
-          </Link>
 
           <Text textAlign="center">
-            At this point you should see a new build folder created with two for
-            the inside. The image folder where we have the PNGs and the json
-            folder for the metadata.
+            You should see a new build folder created with two for the inside.
+            The image folder where we have the PNGs and the JSON folder for the
+            metadata.
+          </Text>
+
+          <Text textAlign="center">
+            Move the file _metadata.json from the json folder to the images
+            folder.
           </Text>
 
           <Button onClick={done}>I have the images generated</Button>
