@@ -1,5 +1,5 @@
 {
-  "name": "@scaffold-eth/dapp",
+  "name": "dquests",
   "version": "0.1.1",
   "private": true,
   "description": "Web3, decentralized app using NextJS, TypeScript, Chakra-UI and ethers.js",

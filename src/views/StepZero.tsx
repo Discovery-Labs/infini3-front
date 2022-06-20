@@ -19,7 +19,7 @@ const StepOne = () => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   // Verify quest completion
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   // > Set progress on complete
   useEffect(() => {
