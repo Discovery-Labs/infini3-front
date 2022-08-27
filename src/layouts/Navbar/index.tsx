@@ -46,7 +46,6 @@ const LinkItems = () => {
   return (
     <>
       <LinkItem href="/">Adventure</LinkItem>
-      <LinkItem href="/example">ExampleUI</LinkItem>
       <Link
         display="inline-flex"
         alignItems="center"
