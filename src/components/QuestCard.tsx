@@ -1,13 +1,15 @@
-import { Box, Button, Flex, Tag, TagLabel, Text } from "@chakra-ui/react";
-import { Heading, LinkButton } from "tw-components";
+import { Box, Flex, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
+import { quests } from "@prisma/client";
+import { LinkButton } from "tw-components";
 
 interface Props {
-  title: string;
-  description: string;
+  quest: quests;
   children?: React.ReactNode;
 }
 
-const QuestCard = ({ title, description }: Props) => {
+const QuestCard = ({ quest }: Props) => {
+  const { id: questId, title, description, tags } = quest;
+
   return (
     <Flex
       w="full"
@@ -19,11 +21,13 @@ const QuestCard = ({ title, description }: Props) => {
       direction="column"
     >
       <Flex w="full" direction="column" overflow="hidden">
-        <Box>
-          <Tag size="md" borderRadius="full" variant="solid">
-            <TagLabel>Tag</TagLabel>
-          </Tag>
-        </Box>
+        <HStack>
+          {tags.split(",").map((tag, i) => (
+            <Tag key={i} size="md" borderRadius="full" variant="solid">
+              <TagLabel>{tag}</TagLabel>
+            </Tag>
+          ))}
+        </HStack>
         <Text noOfLines={3} pt={2} fontWeight="bold" size="text.medium">
           {title}
         </Text>
@@ -35,7 +39,7 @@ const QuestCard = ({ title, description }: Props) => {
         <LinkButton
           w="full"
           _hover={{ color: "white" }}
-          href="/quest/first-quest"
+          href={`/quest/${questId}`}
         >
           Play
         </LinkButton>

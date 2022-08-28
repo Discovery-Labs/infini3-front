@@ -13,6 +13,7 @@ type RawQuestion = {
 type RawQuestions = {
   title: string;
   description: string;
+  tags: string;
   questions: RawQuestion[];
 };
 
@@ -59,6 +60,7 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
       user_id: userId,
       title: questData.title,
       description: questData.description,
+      tags: questData.tags,
     },
   });
 
