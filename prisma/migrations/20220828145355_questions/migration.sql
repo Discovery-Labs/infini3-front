@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "step_type" AS ENUM ('guide', 'questions');
+CREATE TYPE "step_type" AS ENUM ('guide', 'question');
 
 -- CreateEnum
-CREATE TYPE "app_permission" AS ENUM ('messages.delete');
+CREATE TYPE "app_permission" AS ENUM ('quests.delete');
 
 -- CreateEnum
 CREATE TYPE "app_role" AS ENUM ('admin', 'moderator', 'builder');
@@ -19,16 +19,16 @@ CREATE TABLE "quests" (
 );
 
 -- CreateTable
-CREATE TABLE "quiz_steps" (
+CREATE TABLE "questions" (
     "id" TEXT NOT NULL,
     "type" "step_type" NOT NULL,
     "guide" TEXT,
     "question" TEXT,
-    "choices" TEXT[],
+    "options" TEXT[],
     "answer" TEXT,
     "questsId" INTEGER,
 
-    CONSTRAINT "quiz_steps_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "questions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -73,7 +73,7 @@ CREATE UNIQUE INDEX "users_address_key" ON "users"("address");
 ALTER TABLE "quests" ADD CONSTRAINT "quests_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "quiz_steps" ADD CONSTRAINT "quiz_steps_questsId_fkey" FOREIGN KEY ("questsId") REFERENCES "quests"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "questions" ADD CONSTRAINT "questions_questsId_fkey" FOREIGN KEY ("questsId") REFERENCES "quests"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
