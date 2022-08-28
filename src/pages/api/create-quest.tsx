@@ -1,11 +1,24 @@
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, step_type } from "@prisma/client";
+
+type RawQuestion = {
+  type: step_type;
+  guide?: string;
+  question?: string;
+  options?: { value: string }[];
+  answer?: { label: string; value: string; colorScheme: string };
+};
+
+type RawQuestions = {
+  title: string;
+  description: string;
+  questions: RawQuestion[];
+};
 
 const prisma = new PrismaClient();
 
 const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("createQuest api");
   if (req.method !== "POST") {
     return res.status(400).json({
       error: "Invalid method. Only POST supported.",
@@ -38,19 +51,40 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
   const address = await sdk.auth.authenticate(domain, token);
 
   const userId = req.cookies.cuid;
-  const rest = await prisma.quests.create({
+
+  // Create Quest and its Questions
+  const questData: RawQuestions = JSON.parse(req.body);
+  const quests = await prisma.quests.create({
     data: {
       user_id: userId,
-      title: "title",
-      description: "description",
+      title: questData.title,
+      description: questData.description,
     },
   });
-  console.log(
-    "🚀 ~ file: create-quest.tsx ~ line 48 ~ createQuest ~ rest",
-    rest
-  );
 
-  res.status(200).json(address);
+  questData.questions.map(async (question) => {
+    if (question.type === "guide") {
+      await prisma.questions.create({
+        data: {
+          type: question.type,
+          guide: question.guide || "",
+          questsId: quests.id,
+        },
+      });
+    } else {
+      await prisma.questions.create({
+        data: {
+          type: question.type,
+          question: question.question || "",
+          options: question.options?.map((option) => option.value),
+          answer: question.answer?.value,
+          questsId: quests.id,
+        },
+      });
+    }
+  });
+
+  res.status(200).json(quests);
 };
 
 export default createQuest;
