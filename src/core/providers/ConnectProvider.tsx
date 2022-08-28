@@ -1,4 +1,3 @@
-import "@rainbow-me/rainbowkit/styles.css";
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 
 interface Props {
