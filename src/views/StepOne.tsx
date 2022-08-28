@@ -1,5 +1,4 @@
 import { Container, Flex, Stack } from "@chakra-ui/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import QuestGuide from "components/views/QuestGuide";
@@ -47,7 +46,6 @@ const StepOne = () => {
           ) : (
             <Stack layerStyle="solid-card" align="center" spacing={8}>
               <Text>Connect your wallet</Text>
-              <ConnectButton />
             </Stack>
           )}
         </Flex>

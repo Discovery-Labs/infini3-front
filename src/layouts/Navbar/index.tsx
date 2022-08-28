@@ -12,16 +12,23 @@ import {
   Icon,
   IconButton,
   Link,
+  useColorModeValue,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import ThemeToggle from "components/buttons/ThemeToggle";
+import { ConnectWallet } from "@thirdweb-dev/react";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
-Link;
+import ThemeToggle from "../../components/Buttons/ThemeToggle";
+React.useLayoutEffect = React.useEffect;
+
+import { useAddress } from "@thirdweb-dev/react";
+import useAuthenticate from "hooks/useAuthenticate";
+
 const LinkItem = ({ href, children, ...props }: any) => {
   const { pathname } = useRouter();
 
@@ -63,6 +70,14 @@ const LinkItems = () => {
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const address = useAddress();
+  const { logout } = useAuthenticate();
+
+  useEffect(() => {
+    if (!address) {
+      logout();
+    }
+  }, [address]);
 
   return (
     <Box as="nav" w="100%" top="0" zIndex={1}>
@@ -90,7 +105,7 @@ const Navbar = () => {
         </HStack>
 
         <HStack marginLeft="auto">
-          <ConnectButton />
+          <ConnectWallet colorMode={useColorModeValue("light", "dark")} />
           <ThemeToggle display={{ base: "none", md: "flex" }} />
           <IconButton
             size="md"
