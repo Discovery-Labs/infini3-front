@@ -1,18 +1,8 @@
 import {
+  Button,
   Container,
   Divider,
   Flex,
-  FormHelperText,
-  HStack,
-  Radio,
-  RadioGroup,
-  Select,
-  VStack,
-} from "@chakra-ui/react";
-import { Heading } from "tw-components";
-
-import {
-  Button,
   FormControl,
   FormLabel,
   Input,
@@ -20,12 +10,34 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { Heading } from "tw-components";
+import useAuthenticate from "../hooks/useAuthenticate";
+import useQuest from "../hooks/useQuest";
+import { useAddress, useMetamask } from "@thirdweb-dev/react";
 
 const Create = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const { login, authenticate } = useAuthenticate();
+  const { createQuest } = useQuest();
+  const address = useAddress();
+  const connectWithMetamask = useMetamask();
 
+  const createQuizQuest = async () => {
+    if (!address) {
+      console.log("Connect Wallet");
+      await connectWithMetamask();
+      await login();
+    }
+
+    const res = await authenticate();
+    if (!res.ok) {
+      await login();
+    }
+
+    //call a function
+    createQuest();
+  };
   return (
     <VStack flex="1" justify="start" align="center">
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
@@ -64,13 +76,10 @@ const Create = () => {
               {/* answers + correct answer */}
               <Stack spacing={10} pt={2}>
                 <Button
+                  onClick={createQuizQuest}
                   loadingText="Submitting"
                   size="lg"
-                  bg={"blue.400"}
                   color={"white"}
-                  _hover={{
-                    bg: "blue.500",
-                  }}
                 >
                   Create
                 </Button>
