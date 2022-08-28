@@ -1,27 +1,13 @@
-import { VStack } from "@chakra-ui/react";
-import useStore, { AdventureEnum, ViewsProps } from "core/states";
+import { Text, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useCallback, useEffect } from "react";
-import NextSteps from "views/NextSteps";
-import StepOne from "views/StepOne";
-
+import { useRouter } from "next/router";
 const Adventure: NextPage = () => {
-  const { adventureState, setAdventureState } = useStore();
+  const router = useRouter();
+  const questId = router.query.slug;
 
-  const loadView = useCallback(() => {
-    console.log(`loadView: ${AdventureEnum.StepOne}`);
-  }, [setAdventureState]);
-  useEffect(() => {
-    loadView();
-  }, [adventureState, loadView]);
-
-  const views: ViewsProps = {
-    [AdventureEnum.StepOne]: () => <StepOne />,
-    [AdventureEnum.NextSteps]: () => <NextSteps />,
-  };
   return (
     <VStack flex="1" justify="space-between">
-      {views[adventureState]()}
+      <Text>Hello World</Text>
     </VStack>
   );
 };

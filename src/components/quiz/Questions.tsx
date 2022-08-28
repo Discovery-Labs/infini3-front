@@ -17,7 +17,7 @@ import ControlledSelect from "./ControlledSelect";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import useAuthenticate from "../../hooks/useAuthenticate";
-import useQuest from "../../hooks/useQuest";
+import useQuest from "../../hooks/useCreateQuest";
 import OptionsFieldArray from "./OptionsFieldArray";
 
 export default function Questions() {
@@ -82,6 +82,19 @@ export default function Questions() {
             type="text"
             {...register("description", {
               required: "This is required",
+            })}
+          />
+        </FormControl>
+        <FormControl id="tags">
+          <FormLabel>Tags (Separate with comma)</FormLabel>
+          <Input
+            type="text"
+            {...register("tags", {
+              required: "This is required",
+              maxLength: {
+                value: 20,
+                message: "Maximum length should be 20",
+              },
             })}
           />
         </FormControl>

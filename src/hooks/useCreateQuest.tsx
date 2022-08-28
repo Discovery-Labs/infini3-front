@@ -7,14 +7,7 @@ export default function useQuest() {
     return res;
   }
 
-  async function logout() {
-    await fetch("/api/logout", {
-      method: "POST",
-    });
-  }
-
   return {
     createQuest,
-    logout,
   };
 }

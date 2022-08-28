@@ -7,7 +7,7 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
-import QuestCard from "components/QuestCard";
+import GridOfCards from "components/GridOfCards";
 import { isValidMotionProp, motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { Heading, LinkButton } from "tw-components";
@@ -73,9 +73,7 @@ const Home = () => {
         </Flex>
       </Container>
       <Container maxW="container.lg">
-        <SimpleGrid columns={[2, null, 3]} spacing="40px">
-          <QuestCard title={"hello"} description={"world"} />
-        </SimpleGrid>
+        <GridOfCards />
       </Container>
     </VStack>
   );

@@ -9,12 +9,13 @@ import {
 } from "@chakra-ui/react";
 import Questions from "components/quiz/Questions";
 import { Heading } from "tw-components";
+import NextLink from "next/link";
 
 const Create = () => {
   return (
     <VStack flex="1" justify="start" align="center">
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
-        <Flex minH={"100vh"} align={"center"} justify={"center"}>
+        <Flex align={"center"} justify={"center"}>
           <Stack w="full" spacing={8} mx={"auto"} maxW={"lg"}>
             <Stack align={"center"}>
               <Heading fontSize={"4xl"} textAlign={"center"}>
@@ -34,7 +35,9 @@ const Create = () => {
             >
               <Stack pb={4}>
                 <Text align={"start"}>
-                  <Link color={"red.400"}>Quit</Link>
+                  <NextLink href="/" passHref>
+                    <Link color={"red.400"}>Quit</Link>
+                  </NextLink>
                 </Text>
               </Stack>
               <Questions />
