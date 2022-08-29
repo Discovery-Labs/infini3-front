@@ -49,6 +49,7 @@ model user_roles {
 model users {
   id                  String       @id @default(cuid())
   username            String?
+  bio                 String?
   experience          Int          @default(0)
   address             String       @unique
   completed_quest_ids Int[]
