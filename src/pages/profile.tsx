@@ -29,12 +29,9 @@ const Profile = () => {
   const connectWithMetamask = useMetamask();
   const [isEdit, setIsEdit] = useState(false);
   const {
-    watch,
-    control,
     handleSubmit,
     register,
-    reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
 
   const isUserConnected = async () => {
@@ -119,7 +116,7 @@ const Profile = () => {
                     <FormLabel>username</FormLabel>
                     <Input
                       type="text"
-                      placeholder={user.username || ""}
+                      placeholder={user?.username || ""}
                       {...register("username")}
                     />
                   </FormControl>
@@ -132,13 +129,13 @@ const Profile = () => {
                     <FormLabel>bio</FormLabel>
                     <Input
                       type="text"
-                      placeholder={user.bio || ""}
+                      placeholder={user?.bio || ""}
                       {...register("bio")}
                     />
                   </FormControl>
 
                   <Flex justify={"space-around"} align={"center"}>
-                    <Text>{user?.completed_quest_ids?.length} ⭐️</Text>
+                    <Text>{user?.completed_quests?.length} ⭐️</Text>
                     <Text>{user?.experience} 🔥</Text>
                   </Flex>
 
@@ -198,7 +195,7 @@ const Profile = () => {
                 </Text>
 
                 <Flex justify={"space-around"} align={"center"}>
-                  <Text>{user?.completed_quest_ids?.length} ⭐️</Text>
+                  <Text>{user?.completed_quests?.length} ⭐️</Text>
                   <Text>{user?.experience} 🔥</Text>
                 </Flex>
 
