@@ -1,27 +1,32 @@
 import create from "zustand";
 
-export type ViewsProps = {
-  [AdventureEnum: string]: () => JSX.Element;
-};
-
-export enum AdventureEnum {
-  StepOne = "StepOne",
-  NextSteps = "NextSteps",
-}
-
 interface AdventureState {
-  adventureState: AdventureEnum;
-  setAdventureState: (adventureState: AdventureEnum) => void;
-  progress: number;
-  setProgress: (progress: number) => void;
+  questionIndex: number;
+  nextQuestion: (qIndex: number, qLength: number) => void;
+  // progress: number;
+  // setProgress: (progress: number) => void;
 }
 
+// zustand merge only first level. second level looks like questionIndex: { count: 0 }
+// for second level you have to use spread operator
 const useStore = create<AdventureState>((set) => ({
-  adventureState: AdventureEnum.StepOne,
-  setAdventureState: (adventureState) =>
-    set((state) => ({ ...state, adventureState })),
-  progress: 0,
-  setProgress: (progress) => set((state) => ({ ...state, progress })),
+  questionIndex: 0,
+  nextQuestion: (qIndex, qLength) => {
+    if (qIndex === qLength - 1) {
+      set((state) => ({
+        ...state,
+        questionIndex: state.questionIndex,
+      }));
+    } else {
+      set((state) => ({
+        questionIndex: state.questionIndex + 1,
+      }));
+    }
+  },
+  // setQuestionIndex: (adventureState) =>
+  //   set((state) => ({ ...state, questionIndex })),
+  // progress: 0,
+  // setProgress: (progress) => set((state) => ({ ...state, progress })),
 }));
 
 export default useStore;

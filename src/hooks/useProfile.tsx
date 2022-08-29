@@ -15,7 +15,13 @@ export default function useProfile() {
   }
 
   return {
-    user: data as users,
+    user: data as
+      | (users & {
+          completed_quests: {
+            id: number;
+          }[];
+        })
+      | null,
     isLoading: !error && !data,
     isError: error,
     mutate,
