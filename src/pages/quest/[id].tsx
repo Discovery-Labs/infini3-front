@@ -1,13 +1,11 @@
-import { Button, Text, VStack } from "@chakra-ui/react";
-import { step_type } from "@prisma/client";
-import useStore from "core/state";
+import { Text, VStack } from "@chakra-ui/react";
+import QuestionCard from "components/QuestionCard";
 import useQuiz from "hooks/useQuiz";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 const Adventure: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { questionIndex, nextQuestion } = useStore();
   const { quiz, isLoading } = useQuiz(Number(id));
 
   if (isLoading) {
@@ -18,38 +16,9 @@ const Adventure: NextPage = () => {
     );
   }
 
-  const { type, guide, question, options, answer } = quiz[questionIndex];
-
   return (
     <VStack flex="1" justify="center">
-      {type === step_type.guide && (
-        <>
-          <Text>Hello question</Text>
-          {questionIndex === quiz.length - 1 ? (
-            <Button onClick={() => nextQuestion(questionIndex, quiz.length)}>
-              Submit
-            </Button>
-          ) : (
-            <Button onClick={() => nextQuestion(questionIndex, quiz.length)}>
-              Next
-            </Button>
-          )}
-        </>
-      )}
-      {type === step_type.question && (
-        <>
-          <Text>Hello question</Text>
-          {questionIndex === quiz.length - 1 ? (
-            <Button onClick={() => nextQuestion(questionIndex, quiz.length)}>
-              Submit
-            </Button>
-          ) : (
-            <Button onClick={() => nextQuestion(questionIndex, quiz.length)}>
-              Next
-            </Button>
-          )}
-        </>
-      )}
+      {quiz && <QuestionCard quiz={quiz} />}
     </VStack>
   );
 };

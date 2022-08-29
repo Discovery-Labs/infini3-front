@@ -1,19 +1,19 @@
 import { Box, Container, Flex, Stack } from "@chakra-ui/react";
-import useStore, { AdventureEnum } from "core/state";
+// import useStore from "core/state";
 import { Button, Text } from "tw-components";
 
 interface BottomNextBtnProps {
   isLast?: boolean;
   isCompleted?: boolean;
-  adventureState: AdventureEnum;
+  // adventureState: AdventureEnum;
 }
 
 const BottomNextBtn = ({
   isLast = false,
   isCompleted = false,
-  adventureState,
-}: BottomNextBtnProps) => {
-  const { setAdventureState } = useStore();
+}: // adventureState,
+BottomNextBtnProps) => {
+  // const { setAdventureState } = useStore();
 
   const SuccessText = () => {
     const sentences = [
@@ -51,7 +51,7 @@ const BottomNextBtn = ({
           <Button
             w="full"
             onClick={() => {
-              setAdventureState(AdventureEnum.StepOne);
+              // setAdventureState(AdventureEnum.StepOne);
             }}
           >
             Restart
@@ -61,7 +61,7 @@ const BottomNextBtn = ({
             w={{ base: "full", md: "md" }}
             disabled={!isCompleted}
             onClick={() => {
-              setAdventureState(adventureState);
+              // setAdventureState(adventureState);
             }}
           >
             Next
