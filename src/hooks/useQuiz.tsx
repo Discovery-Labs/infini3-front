@@ -1,3 +1,4 @@
+import { questions } from "@prisma/client";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -22,7 +23,7 @@ export default function useQuiz(questId: number) {
   }, [questId]);
 
   return {
-    quiz: data,
+    quiz: data as questions[],
     isLoading: !error && !data,
     isError: error,
   };

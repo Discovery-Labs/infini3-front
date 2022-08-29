@@ -1,5 +1,5 @@
 import { Box, Container, Flex, Stack } from "@chakra-ui/react";
-import useStore, { AdventureEnum } from "core/states";
+import useStore, { AdventureEnum } from "core/state";
 import { Button, Text } from "tw-components";
 
 interface BottomNextBtnProps {
