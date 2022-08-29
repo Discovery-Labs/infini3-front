@@ -1,6 +1,6 @@
-import { SimpleGrid, Skeleton, SkeletonText } from "@chakra-ui/react";
-import QuestCard from "./QuestCard";
+import { SimpleGrid, Skeleton } from "@chakra-ui/react";
 import useQuests from "hooks/useQuests";
+import QuestCard from "./QuestCard";
 
 const GridOfCards = () => {
   const { quests, isLoading } = useQuests();

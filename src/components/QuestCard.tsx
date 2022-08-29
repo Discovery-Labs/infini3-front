@@ -3,12 +3,16 @@ import { quests } from "@prisma/client";
 import { LinkButton } from "tw-components";
 
 interface Props {
-  quest: quests;
+  quest: quests & {
+    author: {
+      username: string | null;
+    };
+  };
   children?: React.ReactNode;
 }
 
 const QuestCard = ({ quest }: Props) => {
-  const { id: questId, title, description, tags } = quest;
+  const { id: questId, title, description, tags, author } = quest;
 
   return (
     <Flex
@@ -28,6 +32,9 @@ const QuestCard = ({ quest }: Props) => {
             </Tag>
           ))}
         </HStack>
+        <Text pt={2} fontWeight="light" size="text.small" color="gray.400">
+          {author.username || "anon"}
+        </Text>
         <Text noOfLines={3} pt={2} fontWeight="bold" size="text.medium">
           {title}
         </Text>
