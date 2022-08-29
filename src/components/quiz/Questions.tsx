@@ -17,13 +17,13 @@ import ControlledSelect from "./ControlledSelect";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import useAuthenticate from "../../hooks/useAuthenticate";
-import useQuest from "../../hooks/useCreateQuest";
+import useCreateQuest from "../../hooks/useCreateQuest";
 import OptionsFieldArray from "./OptionsFieldArray";
 
 export default function Questions() {
   const router = useRouter();
   const { login, authenticate } = useAuthenticate();
-  const { createQuest } = useQuest();
+  const { createQuest } = useCreateQuest();
   const address = useAddress();
   const connectWithMetamask = useMetamask();
   const {

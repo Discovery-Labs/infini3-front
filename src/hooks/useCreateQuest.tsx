@@ -1,4 +1,4 @@
-export default function useQuest() {
+export default function useCreateQuest() {
   async function createQuest(data: any) {
     const res = await fetch("/api/create-quest", {
       method: "POST",

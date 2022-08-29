@@ -1,7 +1,7 @@
 export const appStaticContent = {
   currentAppLink: "https://demo.scaffold-eth.io",
-  name: "Scaffold ETH",
-  description: "Bootstrap & customize your dApp in minutes",
+  name: "dCompass Quest",
+  description: "LEARN WEB3 BY COMPLETING QUEST.",
 };
 
 /** @type {import('next-seo').DefaultSeoProps} */
