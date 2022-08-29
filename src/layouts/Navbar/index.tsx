@@ -53,7 +53,7 @@ const LinkItems = () => {
   return (
     <>
       <LinkItem href="/">Adventure</LinkItem>
-      {/* <LinkItem href="/profile">Profile</LinkItem> */}
+      <LinkItem href="/profile">Profile</LinkItem>
       <Link
         display="inline-flex"
         alignItems="center"
