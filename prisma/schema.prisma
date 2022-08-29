@@ -8,14 +8,15 @@ datasource db {
 }
 
 model quests {
-  id          Int         @id @default(autoincrement())
-  inserted_at DateTime    @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamptz(6)
-  title       String
-  description String
-  tags        String
-  questions   questions[]
-  author      users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user_id     String
+  id              Int            @id @default(autoincrement())
+  inserted_at     DateTime       @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamptz(6)
+  title           String
+  description     String
+  tags            String
+  questions       questions[]
+  author          users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id         String
+  completed_users quests_users[]
 }
 
 model questions {
@@ -47,14 +48,22 @@ model user_roles {
 }
 
 model users {
-  id                  String       @id @default(cuid())
-  username            String?
-  bio                 String?
-  experience          Int          @default(0)
-  address             String       @unique
-  completed_quest_ids Int[]
-  quests              quests[]
-  user_roles          user_roles[]
+  id               String         @id @default(cuid())
+  username         String?
+  bio              String?
+  experience       Int            @default(0)
+  address          String         @unique
+  quests           quests[]
+  user_roles       user_roles[]
+  completed_quests quests_users[]
+}
+
+model quests_users {
+  id       Int     @id @default(autoincrement())
+  users    users?  @relation(fields: [usersId], references: [id])
+  quests   quests? @relation(fields: [questsId], references: [id])
+  usersId  String?
+  questsId Int?
 }
 
 enum step_type {
