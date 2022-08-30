@@ -11,7 +11,7 @@ const fetcher = async (url: string, questId: number) =>
 export default function useQuiz(questId: number) {
   const [mounted, setMounted] = useState(false);
 
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     mounted ? [`/api/quiz`, questId] : null,
     fetcher
   );
@@ -26,5 +26,6 @@ export default function useQuiz(questId: number) {
     quiz: data as questions[],
     isLoading: !error && !data,
     isError: error,
+    mutate,
   };
 }

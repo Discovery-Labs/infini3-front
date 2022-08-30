@@ -15,7 +15,6 @@ const useNFTMetadata = ({ chainId, address, tokenId }: getMetadataProps) => {
     const result = await axios.get(
       `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/nft_metadata/${tokenId}/?key=ckey_b50d19f98bea40628b90af32c9c`
     );
-    console.log("result", result);
     setTokenName(result.data.data.items[0].nft_data[0].external_data.name);
     setTokenImageURL(
       result.data.data.items[0].nft_data[0].external_data.image_512

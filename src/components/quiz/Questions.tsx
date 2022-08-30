@@ -46,7 +46,6 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     if (!address) {
       await connectWithMetamask();
       await login();
@@ -58,7 +57,6 @@ export default function Questions() {
     }
 
     const quest = await createQuest(data);
-    console.log("🚀 ~ file: Questions.tsx ~ line 61 ~ onSubmit ~ quest", quest);
     if (quest.ok) {
       router.push("/");
     }

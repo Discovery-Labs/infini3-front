@@ -30,19 +30,16 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     answered,
     reset,
   } = useStore();
+
+  // Reset on new
+  useEffect(() => {
+    reset();
+  }, []);
+
   const { type, guide, question, options, answer } = quiz[questionIndex];
-  console.log("id", quiz);
 
   const questionsLength = quiz.length - 1;
   const isLast = questionIndex === questionsLength;
-  console.log(
-    "🚀 ~ file: QuestionCard.tsx ~ line 37 ~ QuestionCard ~ questionsLength",
-    questionsLength
-  );
-  console.log(
-    "🚀 ~ file: QuestionCard.tsx ~ line 37 ~ QuestionCard ~ questionIndex",
-    questionIndex
-  );
 
   const openModal = useCallback(() => {
     if (isFinished && correct !== answered) {
@@ -61,19 +58,11 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
 
   const guideNext = useCallback(() => {
     isLast ? setIsFinished(true) : nextQuestion();
-    console.log(
-      "🚀 ~ file: QuestionCard.tsx ~ line 55 ~ guideNext ~ isLast",
-      isLast
-    );
   }, [isLast, nextQuestion]);
 
   const questionNext = (option?: string) => {
     answer === option ? incrementCorrect() : incrementAnswered();
     isLast ? setIsFinished(true) : nextQuestion();
-    console.log(
-      "🚀 ~ file: QuestionCard.tsx ~ line 64 ~ questionNext ~ isLast",
-      isLast
-    );
   };
 
   if (isFinished && correct === answered) {

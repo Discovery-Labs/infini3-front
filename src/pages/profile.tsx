@@ -52,7 +52,6 @@ const Profile = () => {
   }, [address]);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     if (!address) {
       await connectWithMetamask();
       await login();
