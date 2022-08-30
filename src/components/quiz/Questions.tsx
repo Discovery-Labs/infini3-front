@@ -46,6 +46,9 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
+    if (data.questions === undefined || data.questions.length === 0)
+      alert("Create a least 1 question");
+
     await login();
 
     const quest = await createQuest(data);
