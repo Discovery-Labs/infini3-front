@@ -23,7 +23,7 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 // import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
-import ThemeToggle from "../../components/Buttons/ThemeToggle";
+import ThemeToggle from "../../components/Button/ThemeToggle";
 React.useLayoutEffect = React.useEffect;
 
 import { useAddress } from "@thirdweb-dev/react";
