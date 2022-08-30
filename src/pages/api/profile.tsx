@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "core/providers/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
 
 const profile = async (req: NextApiRequest, res: NextApiResponse) => {
   const userId = req.cookies.cuid;

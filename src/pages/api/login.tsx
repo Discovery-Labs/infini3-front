@@ -2,9 +2,7 @@ import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
 import { LoginPayload } from "@thirdweb-dev/sdk/dist/src/schema";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "core/providers/prisma";
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {

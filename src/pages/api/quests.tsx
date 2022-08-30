@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "core/providers/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
 
 const quests = async (req: NextApiRequest, res: NextApiResponse) => {
   const quests = await prisma.quests.findMany({

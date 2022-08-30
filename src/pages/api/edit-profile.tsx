@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "core/providers/prisma";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -6,8 +6,6 @@ type ProfileData = {
   username?: string;
   bio?: string;
 };
-
-const prisma = new PrismaClient();
 
 const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
@@ -39,7 +37,7 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Authenticate token with the SDK
   const domain = "dcompass.xyz";
-  const address = await sdk.auth.authenticate(domain, token);
+  await sdk.auth.authenticate(domain, token);
 
   const userId = req.cookies.cuid;
 
