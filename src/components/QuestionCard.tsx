@@ -1,47 +1,88 @@
-import { Box, Button, Container, Flex, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { questions, step_type } from "@prisma/client";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import useStore from "core/state";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Heading } from "tw-components";
+import { NotSuccessModal } from "./Modal/NotSuccessModal";
 
 interface QuestionCardProps {
   quiz: questions[];
 }
+
 const QuestionCard = ({ quiz }: QuestionCardProps) => {
-  const { questionIndex, nextQuestion, incrementCorrect } = useStore();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isFinished, setIsFinished] = useState(false);
+  const {
+    questionIndex,
+    nextQuestion,
+    incrementCorrect,
+    incrementAnswered,
+    correct,
+    answered,
+    reset,
+  } = useStore();
   const { type, guide, question, options, answer } = quiz[questionIndex];
+  console.log("id", quiz);
 
   const questionsLength = quiz.length - 1;
   const isLast = questionIndex === questionsLength;
+  console.log(
+    "🚀 ~ file: QuestionCard.tsx ~ line 37 ~ QuestionCard ~ questionsLength",
+    questionsLength
+  );
+  console.log(
+    "🚀 ~ file: QuestionCard.tsx ~ line 37 ~ QuestionCard ~ questionIndex",
+    questionIndex
+  );
+
+  const openModal = useCallback(() => {
+    if (isFinished && correct !== answered) {
+      onOpen();
+    }
+  }, [answered, correct, isFinished, onOpen]);
+  useEffect(() => {
+    openModal();
+  }, [openModal]);
+
+  const resetQuiz = useCallback(() => {
+    reset();
+    setIsFinished(false);
+    onClose();
+  }, [onClose, reset]);
 
   const guideNext = useCallback(() => {
-    console.log("guideNext", guideNext);
-    if (isLast) {
-      openResult();
-    } else {
-      nextQuestion();
-    }
+    isLast ? setIsFinished(true) : nextQuestion();
+    console.log(
+      "🚀 ~ file: QuestionCard.tsx ~ line 55 ~ guideNext ~ isLast",
+      isLast
+    );
   }, [isLast, nextQuestion]);
 
   const questionNext = (option?: string) => {
-    if (isLast) {
-      openResult();
-      return;
-    }
-
-    if (answer === option) {
-      incrementCorrect();
-      nextQuestion();
-    } else {
-      nextQuestion();
-    }
+    answer === option ? incrementCorrect() : incrementAnswered();
+    isLast ? setIsFinished(true) : nextQuestion();
+    console.log(
+      "🚀 ~ file: QuestionCard.tsx ~ line 64 ~ questionNext ~ isLast",
+      isLast
+    );
   };
 
-  const openResult = () => {
-    console.log("open result");
-  };
+  if (isFinished && correct === answered) {
+    return (
+      <>
+        <Text> Hello World</Text>
+      </>
+    );
+  }
 
   return (
     <>
@@ -55,6 +96,13 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
       </Container>
 
       <Container maxW="container.lg">
+        <NotSuccessModal
+          isOpen={isOpen}
+          onClose={onClose}
+          correct={correct}
+          answered={answered}
+          resetQuiz={resetQuiz}
+        />
         <Flex
           direction="column"
           w="full"
