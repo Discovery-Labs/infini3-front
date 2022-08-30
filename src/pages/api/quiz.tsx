@@ -6,7 +6,6 @@ const quiz = async (req: NextApiRequest, res: NextApiResponse) => {
   const questions = await prisma.questions.findMany({
     where: { questsId: questId },
   });
-  console.log("🚀 ~ file: quiz.tsx ~ line 11 ~ quiz ~ questions", questions);
 
   res.status(200).json(questions);
 };

@@ -68,7 +68,9 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   if (isFinished && correct === answered) {
     return (
       <>
+        <Box position="relative" height="120px" w="full"></Box>
         <Text> Hello World</Text>
+        <Box position="relative" height="120px" w="full"></Box>
       </>
     );
   }
