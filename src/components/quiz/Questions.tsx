@@ -22,7 +22,7 @@ import OptionsFieldArray from "./OptionsFieldArray";
 
 export default function Questions() {
   const router = useRouter();
-  const { login, authenticate } = useAuthenticate();
+  const { login } = useAuthenticate();
   const { createQuest } = useCreateQuest();
   const address = useAddress();
   const connectWithMetamask = useMetamask();
@@ -46,15 +46,7 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
-    if (!address) {
-      await connectWithMetamask();
-      await login();
-    }
-
-    const res = await authenticate();
-    if (!res.ok) {
-      await login();
-    }
+    await login();
 
     const quest = await createQuest(data);
     if (quest.ok) {
@@ -265,9 +257,13 @@ export default function Questions() {
           <Button colorScheme="secondary" type="button" onClick={() => reset()}>
             Reset Form
           </Button>
-          <Button isLoading={isSubmitting} type="submit">
-            Submit
-          </Button>
+          {address ? (
+            <Button isLoading={isSubmitting} type="submit">
+              Submit
+            </Button>
+          ) : (
+            <Button onClick={connectWithMetamask}>Connect</Button>
+          )}
         </Flex>
       </form>
     </VStack>
