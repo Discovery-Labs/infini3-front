@@ -3,18 +3,26 @@ import { HStack, Progress } from "@chakra-ui/react";
 import { LinkButton } from "tw-components";
 
 interface ProgressBarProps {
-  progress?: number;
+  progress: number;
+  max: number;
   hasStripe?: boolean;
 }
 
-const ProgressBar = ({
-  progress = 100,
-  hasStripe = true,
-}: ProgressBarProps) => {
+const ProgressBar = ({ progress, max, hasStripe = true }: ProgressBarProps) => {
   return (
     <HStack w="full">
       <LinkButton leftIcon={<CloseIcon />} variant="ghost" href="/" />
-      <Progress hasStripe={hasStripe} w="full" value={progress} />
+      {progress === max ? (
+        <Progress colorScheme="green" max={max} w="full" value={progress} />
+      ) : (
+        <Progress
+          max={max}
+          isAnimated
+          hasStripe={hasStripe}
+          w="full"
+          value={progress}
+        />
+      )}
     </HStack>
   );
 };

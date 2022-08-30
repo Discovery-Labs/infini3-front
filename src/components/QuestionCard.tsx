@@ -1,38 +1,56 @@
-import { Button, Container, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Text } from "@chakra-ui/react";
 import { questions, step_type } from "@prisma/client";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import useStore from "core/state";
+import { useCallback } from "react";
 import { Heading } from "tw-components";
 
 interface QuestionCardProps {
   quiz: questions[];
 }
 const QuestionCard = ({ quiz }: QuestionCardProps) => {
-  const { questionIndex, nextQuestion } = useStore();
+  const { questionIndex, nextQuestion, incrementCorrect } = useStore();
   const { type, guide, question, options, answer } = quiz[questionIndex];
 
-  const isLast = questionIndex === quiz.length - 1;
-  console.log(
-    "🚀 ~ file: QuestionCard.tsx ~ line 16 ~ QuestionCard ~ questionIndex",
-    questionIndex
-  );
-  console.log(
-    "🚀 ~ file: QuestionCard.tsx ~ line 16 ~ QuestionCard ~ isLast",
-    isLast
-  );
-  const nextOrFinish = () => {
+  const questionsLength = quiz.length - 1;
+  const isLast = questionIndex === questionsLength;
+
+  const guideNext = useCallback(() => {
+    console.log("guideNext", guideNext);
     if (isLast) {
-      console.log("finish");
+      openResult();
     } else {
-      nextQuestion(questionIndex, quiz.length);
+      nextQuestion();
     }
+  }, [isLast, nextQuestion]);
+
+  const questionNext = (option?: string) => {
+    if (isLast) {
+      openResult();
+      return;
+    }
+
+    if (answer === option) {
+      incrementCorrect();
+      nextQuestion();
+    } else {
+      nextQuestion();
+    }
+  };
+
+  const openResult = () => {
+    console.log("open result");
   };
 
   return (
     <>
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
-        <ProgressBar hasStripe={false} />
+        <ProgressBar
+          progress={questionIndex}
+          max={questionsLength}
+          hasStripe={true}
+        />
         {/* <QuestGuide guide={guide} /> */}
       </Container>
 
@@ -44,33 +62,38 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           align="center"
           gap="4"
         >
-          <Heading size="title.sm" pt="4">
-            Explore more projects and quests
-          </Heading>
           {type === step_type.guide && (
             <>
-              <Text>{guide}</Text>
-              <Button onClick={nextOrFinish}>
-                {isLast ? "Submit" : "Next"}
-              </Button>
+              <Heading size="title.sm" pt="4">
+                {guide}
+              </Heading>
             </>
           )}
+
           {type === step_type.question && (
             <>
-              <Text>{question}</Text>
+              <Heading size="title.sm" pt="4">
+                {question}
+              </Heading>
               {options.map((option) => (
-                <div key={option}>
-                  <Button onClick={() => console.log(option === answer)}>
-                    {option}
-                  </Button>
-                </div>
+                <Button
+                  w="full"
+                  key={option}
+                  onClick={() => questionNext(option)}
+                >
+                  {option}
+                </Button>
               ))}
             </>
           )}
         </Flex>
       </Container>
 
-      <BottomNextBtn isLast />
+      {type === step_type.guide ? (
+        <BottomNextBtn guideNext={guideNext} isLast={isLast} />
+      ) : (
+        <Box position="relative" height="120px" w="full"></Box>
+      )}
     </>
   );
 };

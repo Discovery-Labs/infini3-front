@@ -17,7 +17,7 @@ const Adventure: NextPage = () => {
   }
 
   return (
-    <VStack flex="1" justify="center">
+    <VStack flex="1" justify="space-between">
       {quiz && <QuestionCard quiz={quiz} />}
     </VStack>
   );
