@@ -80,7 +80,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <ProgressBar
           progress={questionIndex}
-          max={questionsLength}
+          max={quiz.length}
           hasStripe={true}
         />
         {/* <QuestGuide guide={guide} /> */}
