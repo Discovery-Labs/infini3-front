@@ -7,7 +7,7 @@ const GridOfCards = () => {
 
   if (isLoading) {
     return (
-      <SimpleGrid py={8} columns={[2, null, 3]} spacing="40px">
+      <SimpleGrid py={8} columns={[1, 2, 3]} spacing="40px">
         <Skeleton height="sm" fadeDuration={1}></Skeleton>
         <Skeleton height="sm" fadeDuration={1}></Skeleton>
         <Skeleton height="sm" fadeDuration={1}></Skeleton>
@@ -16,7 +16,7 @@ const GridOfCards = () => {
   }
 
   return (
-    <SimpleGrid py={8} columns={[2, null, 3]} spacing="40px">
+    <SimpleGrid py={8} columns={[1, 2, 3]} spacing="40px">
       {quests &&
         quests.map((quest: any) => <QuestCard quest={quest} key={quest.id} />)}
     </SimpleGrid>

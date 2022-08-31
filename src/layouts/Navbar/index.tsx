@@ -15,6 +15,7 @@ import {
   useColorModeValue,
   useDisclosure,
   VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -73,6 +74,10 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const address = useAddress();
   const { logout } = useAuthenticate();
+  const isMobile = useBreakpointValue(
+    { base: true, md: false },
+    { ssr: false }
+  );
 
   useEffect(() => {
     if (!address) {
@@ -97,7 +102,7 @@ const Navbar = () => {
                 transform: "rotate(-5deg)",
               }}
             >
-              dCompass quest
+              {isMobile ? "quest" : "dCompass quest"}
             </Link>
           </NextLink>
           <HStack px="2" spacing="4" display={{ base: "none", md: "flex" }}>
