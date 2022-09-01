@@ -3,8 +3,8 @@ import {
   Button,
   Container,
   Flex,
-  Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { questions, step_type } from "@prisma/client";
 import BottomNextBtn from "components/views/BottomNextBtn";
@@ -69,14 +69,20 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
 
   if (isFinished && correct === answered) {
     return (
-      <>
-        <MintBadge questId={questsId} />
-      </>
+      <VStack alignSelf="center" flex="1" justify="center">
+        <Container
+          my={{ base: 4, md: 8 }}
+          maxW="container.lg"
+          alignItems="center"
+        >
+          <MintBadge questId={questsId} />
+        </Container>
+      </VStack>
     );
   }
 
   return (
-    <>
+    <VStack flex="1" justify="space-between">
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <ProgressBar
           progress={questionIndex}
@@ -133,7 +139,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
       ) : (
         <Box position="relative" height="120px" w="full"></Box>
       )}
-    </>
+    </VStack>
   );
 };
 export default QuestionCard;

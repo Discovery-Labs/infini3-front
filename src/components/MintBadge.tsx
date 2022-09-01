@@ -1,24 +1,28 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import {
+  ThirdwebNftMedia,
   useAddress,
   useEdition,
   useMetamask,
   useNetwork,
   useNetworkMismatch,
+  useNFT,
 } from "@thirdweb-dev/react";
 import { DESIRED_CHAIN_ID } from "core/utils/constants";
 import useAuthenticate from "hooks/useAuthenticate";
 import useMint from "hooks/useCreateMint";
+import { Heading } from "tw-components";
 
 const MintBadge = ({ questId }: { questId: number }) => {
   const isMismatched = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
-  const contractAddress = process.env.NEXT_PUBLIC_EDITIONDROP_ADDRESS || "";
-  const contract = useEdition(contractAddress);
   const { mintBadge } = useMint();
   const address = useAddress();
   const connectWithMetamask = useMetamask();
   const { login } = useAuthenticate();
+  const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
+  const contract = useEdition(contractAddress);
+  const { data: nft, isLoading } = useNFT(contract, 6);
 
   const mint = async () => {
     if (isMismatched && switchNetwork) {
@@ -44,15 +48,47 @@ const MintBadge = ({ questId }: { questId: number }) => {
 
   return (
     <>
-      <Box position="relative" height="120px" w="full"></Box>
-      <Text> Mint Badge</Text>
-      {address ? (
-        <Button onClick={() => mint()}>Mint</Button>
-      ) : (
-        <Button onClick={connectWithMetamask}>Connect</Button>
-      )}
-
-      <Box position="relative" height="120px" w="full"></Box>
+      <Flex
+        w="full"
+        layerStyle="solid-hover2"
+        h="sm"
+        maxW={"container.sm"}
+        borderRadius="base"
+        align="start"
+        justify="space-between"
+        direction="column"
+      >
+        <Flex
+          w="full"
+          align={"center"}
+          direction="column"
+          overflow="hidden"
+          textAlign="center"
+        >
+          <Heading>Congrats! 🎉</Heading>
+          <Text noOfLines={3} pt={2} fontWeight="bold" size="text.medium">
+            Mint your badge.
+          </Text>
+          {!isLoading && nft ? (
+            <Box py={8} boxSize={"200px"}>
+              <ThirdwebNftMedia metadata={nft.metadata} />
+            </Box>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </Flex>
+        <Box w="full">
+          {address ? (
+            <Button w="full" onClick={() => mint()}>
+              Mint
+            </Button>
+          ) : (
+            <Button w="full" onClick={connectWithMetamask}>
+              Connect
+            </Button>
+          )}
+        </Box>
+      </Flex>
     </>
   );
 };

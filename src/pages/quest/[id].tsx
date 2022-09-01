@@ -16,11 +16,7 @@ const Adventure: NextPage = () => {
     );
   }
 
-  return (
-    <VStack flex="1" justify="space-between">
-      {quiz && <QuestionCard quiz={quiz} />}
-    </VStack>
-  );
+  return <>{quiz && <QuestionCard quiz={quiz} />}</>;
 };
 
 export default Adventure;
