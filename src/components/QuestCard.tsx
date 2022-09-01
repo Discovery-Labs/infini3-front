@@ -4,7 +4,7 @@ import { LinkButton } from "tw-components";
 
 interface Props {
   quest: quests & {
-    author: {
+    author?: {
       username: string | null;
     };
   };
@@ -33,7 +33,7 @@ const QuestCard = ({ quest }: Props) => {
           ))}
         </HStack>
         <Text pt={2} fontWeight="light" size="text.small" color="gray.400">
-          {author.username || "anon"}
+          {author?.username || ""}
         </Text>
         <Text noOfLines={3} pt={2} fontWeight="bold" size="text.medium">
           {title}

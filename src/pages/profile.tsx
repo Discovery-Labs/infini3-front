@@ -10,12 +10,14 @@ import {
   FormLabel,
   Heading,
   Input,
+  SimpleGrid,
   Skeleton,
   Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
+import QuestCard from "components/QuestCard";
 import useAuthenticate from "hooks/useAuthenticate";
 import useProfile from "hooks/useProfile";
 import { useEffect, useState } from "react";
@@ -37,13 +39,16 @@ const Profile = () => {
   const isUserConnected = async () => {
     if (!address) {
       await connectWithMetamask();
-      await login();
+    } else {
+      setTimeout(async () => {
+        await login();
+      }, 1000);
     }
 
-    const res = await authenticate();
-    if (!res.ok) {
-      await login();
-    }
+    // const res = await authenticate();
+    // if (!res.ok) {
+    //   await login();
+    // }
 
     mutate(`/api/profile`);
   };
@@ -91,7 +96,7 @@ const Profile = () => {
             {isEdit ? (
               <form
                 style={{ width: "inherit" }}
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={() => handleSubmit(onSubmit)}
               >
                 <Box
                   maxW={"320px"}
@@ -212,6 +217,17 @@ const Profile = () => {
             )}
           </Center>
         </Flex>
+
+        <Center>
+          <Text>Your quests</Text>
+        </Center>
+        <SimpleGrid py={8} columns={[1, 2, 3]} spacing="40px">
+          {user?.quests?.map((quest) => (
+            <>
+              <QuestCard key={quest.id} quest={quest} />
+            </>
+          ))}
+        </SimpleGrid>
       </Container>
     </VStack>
   );
