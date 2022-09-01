@@ -12,6 +12,7 @@ import ProgressBar from "components/views/ProgressBar";
 import useStore from "core/state";
 import { useCallback, useEffect, useState } from "react";
 import { Heading } from "tw-components";
+import MintBadge from "./MintBadge";
 import { NotSuccessModal } from "./Modal/NotSuccessModal";
 
 interface QuestionCardProps {
@@ -36,7 +37,8 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     reset();
   }, []);
 
-  const { type, guide, question, options, answer } = quiz[questionIndex];
+  const { type, guide, question, options, answer, questsId } =
+    quiz[questionIndex];
 
   const questionsLength = quiz.length - 1;
   const isLast = questionIndex === questionsLength;
@@ -68,9 +70,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   if (isFinished && correct === answered) {
     return (
       <>
-        <Box position="relative" height="120px" w="full"></Box>
-        <Text> Hello World</Text>
-        <Box position="relative" height="120px" w="full"></Box>
+        <MintBadge questId={questsId} />
       </>
     );
   }
