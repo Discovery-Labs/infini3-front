@@ -53,7 +53,7 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
   const userId = req.cookies.cuid;
 
   // Create Quest and its Questions
-  const questData: RawQuestions = JSON.parse(req.body);
+  const { questData }: { questData: RawQuestions } = JSON.parse(req.body);
   const quests = await prisma.quests.create({
     data: {
       user_id: userId,
