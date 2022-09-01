@@ -1,14 +1,13 @@
-import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { DESIRED_CHAIN_ID } from "core/utils/constants";
 
 interface Props {
   children?: React.ReactNode;
 }
 
-const activeChainId = ChainId.Mainnet;
-
 const ConnectProvider = ({ children }: Props) => {
   return (
-    <ThirdwebProvider desiredChainId={activeChainId}>
+    <ThirdwebProvider desiredChainId={DESIRED_CHAIN_ID}>
       {children}
     </ThirdwebProvider>
   );
