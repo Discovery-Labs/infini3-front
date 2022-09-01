@@ -14,7 +14,13 @@ import useMint from "hooks/useCreateMint";
 import { useEffect, useState } from "react";
 import { Heading } from "tw-components";
 
-const MintBadge = ({ tokenId }: { tokenId: number }) => {
+const MintBadge = ({
+  tokenId,
+  questsId,
+}: {
+  tokenId: number;
+  questsId: number;
+}) => {
   const isMismatched = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
   const { mintBadge } = useMint();
@@ -47,7 +53,7 @@ const MintBadge = ({ tokenId }: { tokenId: number }) => {
       await login();
 
       // Mint NFT Badge
-      const signedPayload = await mintBadge(tokenId);
+      const signedPayload = await mintBadge(tokenId, questsId);
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);

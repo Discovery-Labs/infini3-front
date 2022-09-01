@@ -63,8 +63,8 @@ model quests_users {
   id       Int     @id @default(autoincrement())
   users    users?  @relation(fields: [usersId], references: [id])
   quests   quests? @relation(fields: [questsId], references: [id])
-  usersId  String?
-  questsId Int?
+  usersId  String
+  questsId Int
 }
 
 enum step_type {

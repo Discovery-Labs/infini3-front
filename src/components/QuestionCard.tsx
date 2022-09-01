@@ -41,7 +41,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     reset();
   }, []);
 
-  const { type, guide, question, options, answer, quests } =
+  const { type, guide, question, options, answer, questsId, quests } =
     quiz[questionIndex];
   const { token_id } = quests;
 
@@ -80,7 +80,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           maxW="container.lg"
           alignItems="center"
         >
-          <MintBadge tokenId={token_id} />
+          <MintBadge tokenId={token_id} questsId={questsId} />
         </Container>
       </VStack>
     );

@@ -45,9 +45,17 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
   // const contract = await sdk.getBuiltInContract(contractAddress, "edition");
   const contract = await sdk.getEdition(contractAddress);
 
-  const { tokenId } = JSON.parse(req.body);
+  const { tokenId, questsId } = JSON.parse(req.body);
+  const userId = req.cookies.cuid;
 
   try {
+    await prisma.quests_users.create({
+      data: {
+        usersId: userId,
+        questsId: questsId,
+      },
+    });
+
     const signedPayload = await contract.signature.generateFromTokenId({
       tokenId: tokenId,
       quantity: "1",
