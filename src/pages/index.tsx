@@ -7,7 +7,7 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
-import GridOfCards from "components/GridOfCards";
+import GridOfCards from "components/GridOfQuestCards";
 import { isValidMotionProp, motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { Heading, LinkButton } from "tw-components";

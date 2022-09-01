@@ -47,7 +47,7 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
   const domain = "dcompass.xyz";
   const address = await sdk.auth.authenticate(domain, token);
 
-  const contractAddress = process.env.NEXT_PUBLIC_EDITIONDROP_ADDRESS || "";
+  const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
   // const contract = await sdk.getBuiltInContract(contractAddress, "edition");
   const contract = await sdk.getEdition(contractAddress);
 

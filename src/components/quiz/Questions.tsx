@@ -35,7 +35,7 @@ export default function Questions() {
   const { createQuest } = useCreateQuest();
   const { createMint } = useMint();
   const address = useAddress();
-  const contractAddress = process.env.NEXT_PUBLIC_EDITIONDROP_ADDRESS || "";
+  const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
   const contract = useEdition(contractAddress);
   const connectWithMetamask = useMetamask();
   const {
