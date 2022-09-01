@@ -10,21 +10,33 @@ import {
   VStack,
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
+import {
+  useAddress,
+  useEdition,
+  useMetamask,
+  useNetwork,
+  useNetworkMismatch,
+} from "@thirdweb-dev/react";
+import { DESIRED_CHAIN_ID } from "core/utils/constants";
+import useCreateMint from "hooks/useCreateMint";
+import { useRouter } from "next/router";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Heading } from "tw-components";
-import ControlledSelect from "./ControlledSelect";
-
-import { useAddress, useMetamask } from "@thirdweb-dev/react";
-import { useRouter } from "next/router";
 import useAuthenticate from "../../hooks/useAuthenticate";
 import useCreateQuest from "../../hooks/useCreateQuest";
+import ControlledSelect from "./ControlledSelect";
 import OptionsFieldArray from "./OptionsFieldArray";
 
 export default function Questions() {
+  const isMismatched = useNetworkMismatch();
+  const [, switchNetwork] = useNetwork();
   const router = useRouter();
   const { login } = useAuthenticate();
   const { createQuest } = useCreateQuest();
+  const { createMint } = useCreateMint();
   const address = useAddress();
+  const contractAddress = process.env.NEXT_PUBLIC_EDITIONDROP_ADDRESS || "";
+  const contract = useEdition(contractAddress);
   const connectWithMetamask = useMetamask();
   const {
     watch,
@@ -46,11 +58,38 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
-    if (data.questions === undefined || data.questions.length === 0)
+    if (data.questions === undefined || data.questions.length === 0) {
       alert("Create a least 1 question");
+      return;
+    }
+
+    if (isMismatched && switchNetwork) {
+      switchNetwork(DESIRED_CHAIN_ID);
+    }
 
     await login();
 
+    // Create NFT Mint
+    const signedPayload = await createMint({
+      name: data.title,
+      description: data.description,
+    });
+
+    try {
+      if (!contract) return;
+
+      const tx = await contract.signature.mint(signedPayload);
+      const receipt = tx.receipt;
+      const mintedId = tx.id;
+      console.log("tx", tx);
+      console.log("receipt", receipt);
+      console.log("mintedId", mintedId);
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+
+    // Create Quest in db
     const quest = await createQuest(data);
     if (quest.ok) {
       router.push("/");
