@@ -15,7 +15,7 @@ type RawQuestions = {
   title: string;
   description: string;
   tags: string;
-  tokenId?: number;
+  tokenId: number;
   questions: RawQuestion[];
 };
 
