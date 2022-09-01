@@ -114,7 +114,6 @@ const Profile = () => {
                     src={
                       "https://images.unsplash.com/photo-1529946825183-536c6317f60e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=763&q=80"
                     }
-                    alt={"Avatar Alt"}
                     mb={4}
                     pos={"relative"}
                   />
@@ -181,7 +180,6 @@ const Profile = () => {
                   src={
                     "https://images.unsplash.com/photo-1529946825183-536c6317f60e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=763&q=80"
                   }
-                  alt={"Avatar Alt"}
                   mb={4}
                   pos={"relative"}
                 />
