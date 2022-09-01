@@ -1,5 +1,5 @@
 export const appStaticContent = {
-  currentAppLink: "https://demo.scaffold-eth.io",
+  currentAppLink: "https://dcompass.xyz",
   name: "dCompass Quest",
   description: "LEARN WEB3 BY COMPLETING QUEST.",
 };

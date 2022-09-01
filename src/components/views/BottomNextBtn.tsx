@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Stack } from "@chakra-ui/react";
 // import useStore from "core/state";
-import { Button, Text } from "tw-components";
+import { Button } from "tw-components";
 
 interface BottomNextBtnProps {
   guideNext: () => void;

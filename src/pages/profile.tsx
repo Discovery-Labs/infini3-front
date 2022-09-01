@@ -30,6 +30,8 @@ const Profile = () => {
   const { login, authenticate } = useAuthenticate();
   const connectWithMetamask = useMetamask();
   const [isEdit, setIsEdit] = useState(false);
+  const boxBgColor = useColorModeValue("white", "gray.900");
+  const grayTextColor = useColorModeValue("gray.700", "gray.400");
   const {
     handleSubmit,
     register,
@@ -101,7 +103,7 @@ const Profile = () => {
                 <Box
                   maxW={"320px"}
                   w={"full"}
-                  bg={useColorModeValue("white", "gray.900")}
+                  bg={boxBgColor}
                   boxShadow={"2xl"}
                   rounded={"lg"}
                   p={6}
@@ -168,7 +170,7 @@ const Profile = () => {
               <Box
                 maxW={"320px"}
                 w={"full"}
-                bg={useColorModeValue("white", "gray.900")}
+                bg={boxBgColor}
                 boxShadow={"2xl"}
                 rounded={"lg"}
                 p={6}
@@ -190,11 +192,7 @@ const Profile = () => {
                   {user?.address}
                 </Text>
 
-                <Text
-                  textAlign={"center"}
-                  color={useColorModeValue("gray.700", "gray.400")}
-                  px={3}
-                >
+                <Text textAlign={"center"} color={grayTextColor} px={3}>
                   {user?.bio}
                 </Text>
 

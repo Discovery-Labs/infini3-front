@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "description": "Web3, decentralized app using NextJS, TypeScript, Chakra-UI and ethers.js",
-  "author": "Scaffold-ETH x Gitcoin DAO x Moonshot Collective",
+  "author": "dCompass Quest",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

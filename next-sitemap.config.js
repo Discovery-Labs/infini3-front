@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 const NextSitemapConfig = {
-  siteUrl: "https://demo.scaffold-eth.io",
+  siteUrl: "https://dcompass.xyz",
   generateRobotsTxt: true,
 };
 
