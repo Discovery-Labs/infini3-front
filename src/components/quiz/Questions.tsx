@@ -18,7 +18,7 @@ import {
   useNetworkMismatch,
 } from "@thirdweb-dev/react";
 import { DESIRED_CHAIN_ID } from "core/utils/constants";
-import useCreateMint from "hooks/useCreateMint";
+import useMint from "hooks/useCreateMint";
 import { useRouter } from "next/router";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Heading } from "tw-components";
@@ -33,7 +33,7 @@ export default function Questions() {
   const router = useRouter();
   const { login } = useAuthenticate();
   const { createQuest } = useCreateQuest();
-  const { createMint } = useCreateMint();
+  const { createMint } = useMint();
   const address = useAddress();
   const contractAddress = process.env.NEXT_PUBLIC_EDITIONDROP_ADDRESS || "";
   const contract = useEdition(contractAddress);
@@ -79,11 +79,8 @@ export default function Questions() {
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
-      const receipt = tx.receipt;
-      const mintedId = tx.id;
-      console.log("tx", tx);
-      console.log("receipt", receipt);
-      console.log("mintedId", mintedId);
+
+      data.tokenId = tx.id;
     } catch (err) {
       console.error(err);
       return;

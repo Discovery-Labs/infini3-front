@@ -13,6 +13,7 @@ model quests {
   title           String
   description     String
   tags            String
+  token_id        Int
   questions       questions[]
   author          users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_id         String

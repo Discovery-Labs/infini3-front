@@ -15,6 +15,7 @@ type RawQuestions = {
   title: string;
   description: string;
   tags: string;
+  tokenId?: number;
   questions: RawQuestion[];
 };
 
@@ -60,6 +61,7 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
       title: questData.title,
       description: questData.description,
       tags: questData.tags,
+      token_id: questData.tokenId,
     },
   });
 

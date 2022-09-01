@@ -61,7 +61,6 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
     };
 
     const startTime = new Date();
-    const endTime = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
     const payload = {
       metadata: nftMetadata,
@@ -70,7 +69,6 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
       tokenId: constants.MaxUint256,
       quantity: 1,
       mintStartTime: startTime,
-      mintEndTime: endTime,
     };
 
     const signedPayload = await contract.signature.generate(payload);
