@@ -33,11 +33,11 @@ export const NotSuccessModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            Unfortunately, you haven&apos;t passed the quiz
+            Unfortunately, you haven&apos;t passed the quiz.
           </ModalHeader>
           <ModalBody pb={6}>
             <Text>
-              You answer that correctly {correct}/{answered}
+              You answer correctly: {correct}/{answered}
             </Text>
           </ModalBody>
 

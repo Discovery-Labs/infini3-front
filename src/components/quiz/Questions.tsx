@@ -78,7 +78,7 @@ export default function Questions() {
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
-      data.tokenId = tx.id;
+      data.tokenId = tx.id.toNumber();
     } catch (err) {
       console.error(err);
       return;

@@ -1,7 +1,7 @@
 import { NATIVE_TOKEN_ADDRESS, ThirdwebSDK } from "@thirdweb-dev/sdk";
-import { NextApiRequest, NextApiResponse } from "next";
-import * as fs from "fs";
+import axios from "axios";
 import { constants } from "ethers";
+import { NextApiRequest, NextApiResponse } from "next";
 
 interface QuestData {
   name: string;
@@ -53,11 +53,21 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { questData }: { questData: QuestData } = JSON.parse(req.body);
 
+  function getBase64(url: string) {
+    return axios
+      .get(url, {
+        responseType: "arraybuffer",
+      })
+      .then((response) => Buffer.from(response.data, "binary"));
+  }
+
   try {
+    const imageData = await getBase64("https://i.imgur.com/irlLOUx.png");
+
     const nftMetadata = {
       name: questData.name,
       description: questData.description,
-      image: fs.readFileSync("public/assets/images/blocks.png"), // This can be an image url or file
+      image: imageData,
     };
 
     const startTime = new Date();

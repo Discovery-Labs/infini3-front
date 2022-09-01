@@ -29,7 +29,7 @@ const MintBadge = ({
   const { login } = useAuthenticate();
   const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
   const contract = useEdition(contractAddress);
-  const { data: nft, isLoading } = useNFT(contract, 6);
+  const { data: nft, isLoading } = useNFT(contract, tokenId);
   const [isMinted, setIsMinted] = useState(true);
   const [isMinting, setIsMinting] = useState(false);
 
