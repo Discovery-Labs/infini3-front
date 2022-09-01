@@ -23,7 +23,11 @@ export default function useQuiz(questId: number) {
   }, [questId]);
 
   return {
-    quiz: data as questions[],
+    quiz: data as (questions & {
+      quests: {
+        token_id: number;
+      };
+    })[],
     isLoading: !error && !data,
     isError: error,
   };

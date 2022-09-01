@@ -16,7 +16,11 @@ import MintBadge from "./MintBadge";
 import { NotSuccessModal } from "./Modal/NotSuccessModal";
 
 interface QuestionCardProps {
-  quiz: questions[];
+  quiz: (questions & {
+    quests: {
+      token_id: number;
+    };
+  })[];
 }
 
 const QuestionCard = ({ quiz }: QuestionCardProps) => {
@@ -37,8 +41,9 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     reset();
   }, []);
 
-  const { type, guide, question, options, answer, questsId } =
+  const { type, guide, question, options, answer, quests } =
     quiz[questionIndex];
+  const { token_id } = quests;
 
   const questionsLength = quiz.length - 1;
   const isLast = questionIndex === questionsLength;
@@ -75,7 +80,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           maxW="container.lg"
           alignItems="center"
         >
-          <MintBadge questId={questsId} />
+          <MintBadge tokenId={token_id} />
         </Container>
       </VStack>
     );

@@ -66,7 +66,6 @@ export default function Questions() {
     if (isMismatched && switchNetwork) {
       switchNetwork(DESIRED_CHAIN_ID);
     }
-
     await login();
 
     // Create NFT Mint
@@ -79,7 +78,6 @@ export default function Questions() {
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
-
       data.tokenId = tx.id;
     } catch (err) {
       console.error(err);

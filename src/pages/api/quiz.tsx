@@ -5,6 +5,13 @@ const quiz = async (req: NextApiRequest, res: NextApiResponse) => {
   const { questId } = JSON.parse(req.body);
   const questions = await prisma.questions.findMany({
     where: { questsId: questId },
+    include: {
+      quests: {
+        select: {
+          token_id: true,
+        },
+      },
+    },
   });
 
   res.status(200).json(questions);
