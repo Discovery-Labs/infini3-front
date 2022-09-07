@@ -21,14 +21,15 @@ model quests {
 }
 
 model questions {
-  id       Int       @id @default(autoincrement())
-  type     step_type
-  guide    String?
-  question String?
-  options  String[]
-  answer   String?
-  quests   quests    @relation(fields: [questsId], references: [id])
-  questsId Int
+  id        Int       @id @default(autoincrement())
+  type      step_type
+  guide     String?
+  question  String?
+  options   String[]
+  answer    String?
+  quests    quests    @relation(fields: [questsId], references: [id])
+  questsId  Int
+  itemIndex Int
 }
 
 model role_permissions {

@@ -5,6 +5,7 @@ const quiz = async (req: NextApiRequest, res: NextApiResponse) => {
   const { questId } = JSON.parse(req.body);
   const questions = await prisma.questions.findMany({
     where: { questsId: questId },
+    orderBy: { itemIndex: "asc" },
     include: {
       quests: {
         select: {

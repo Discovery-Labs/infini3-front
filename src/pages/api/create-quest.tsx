@@ -65,26 +65,18 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  questData.questions.map(async (question) => {
-    if (question.type === "guide") {
-      await prisma.questions.create({
-        data: {
-          type: question.type,
-          guide: question.guide || "",
-          questsId: quests.id,
-        },
-      });
-    } else {
-      await prisma.questions.create({
-        data: {
-          type: question.type,
-          question: question.question || "",
-          options: question.options?.map((option) => option.value),
-          answer: question.answer?.value,
-          questsId: quests.id,
-        },
-      });
-    }
+  questData.questions.map(async (question, index) => {
+    await prisma.questions.create({
+      data: {
+        type: question.type,
+        guide: question.guide || "",
+        question: question.question || "",
+        options: question.options?.map((option) => option.value),
+        answer: question.answer?.value,
+        questsId: quests.id,
+        itemIndex: index,
+      },
+    });
   });
 
   res.status(200).json(quests);
