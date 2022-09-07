@@ -51,7 +51,7 @@ export const FileInput: React.FC<IFileInputProps> = ({
     },
     [setValue]
   );
-  const { getRootProps, getInputProps, open } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept,
   });
