@@ -27,6 +27,9 @@ import useCreateQuest from "../../hooks/useCreateQuest";
 import ControlledSelect from "./ControlledSelect";
 import OptionsFieldArray from "./OptionsFieldArray";
 
+import { FileInput } from "components/shared/FileInput";
+import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
+
 export default function Questions() {
   const isMismatched = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
@@ -44,6 +47,7 @@ export default function Questions() {
     handleSubmit,
     register,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -58,6 +62,10 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
+    console.log(
+      "🚀 ~ file: QuestionsForm.tsx ~ line 65 ~ onSubmit ~ data",
+      data
+    );
     if (data.questions === undefined || data.questions.length === 0) {
       alert("Create a least 1 question");
       return;
@@ -94,6 +102,21 @@ export default function Questions() {
   return (
     <VStack w="full">
       <form style={{ width: "inherit" }} onSubmit={handleSubmit(onSubmit)}>
+        <FormControl display="flex" flexDirection="column">
+          <FormLabel>Image</FormLabel>
+          <FileInput
+            accept={{ "image/*": [] }}
+            value={useImageFileOrUrl(watch("image"))}
+            setValue={(file) => setValue("image", file, { shouldTouch: true })}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+            transition="all 200ms ease"
+          />
+          <FormErrorMessage>
+            {questions && questions["image"].error?.message}
+          </FormErrorMessage>
+        </FormControl>
         <FormControl id="title">
           <FormLabel>Title</FormLabel>
           <Input
