@@ -6,15 +6,13 @@ import {
   Icon,
   Image,
   LayoutProps,
-  Link,
   Stack,
 } from "@chakra-ui/react";
 import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
 import React, { useCallback } from "react";
 import { Accept, DropEvent, FileRejection, useDropzone } from "react-dropzone";
-import { AiFillEye, AiOutlineFileAdd } from "react-icons/ai";
 import { FiImage, FiUpload } from "react-icons/fi";
-import { Button, Text } from "tw-components";
+import { Text } from "tw-components";
 
 interface IFileInputProps extends BoxProps {
   accept?: Accept;
@@ -31,7 +29,7 @@ export const FileInput: React.FC<IFileInputProps> = ({
   setValue,
   isDisabled,
   accept,
-  showUploadButton,
+  // showUploadButton,
   value,
   children,
   maxContainerWidth,
