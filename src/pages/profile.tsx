@@ -16,22 +16,47 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useAddress, useMetamask } from "@thirdweb-dev/react";
+import {
+  ThirdwebNftMedia,
+  useAddress,
+  useEdition,
+  useMetamask,
+} from "@thirdweb-dev/react";
 import QuestCard from "components/QuestCard";
 import useAuthenticate from "hooks/useAuthenticate";
 import useProfile from "hooks/useProfile";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // import { useRouter } from "next/router";
 
 const Profile = () => {
-  const { user, isLoading, mutate, editProfile } = useProfile();
+  const {
+    user,
+    isLoading: isProfileLoading,
+    mutate,
+    editProfile,
+  } = useProfile();
   const address = useAddress();
   const { login, authenticate } = useAuthenticate();
   const connectWithMetamask = useMetamask();
   const [isEdit, setIsEdit] = useState(false);
   const boxBgColor = useColorModeValue("white", "gray.900");
   const grayTextColor = useColorModeValue("gray.700", "gray.400");
+  const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
+  const contract = useEdition(contractAddress);
+  const [ownedNfts, setOwnedNfts] = useState<any>();
+
+  const loadNft = useCallback(async () => {
+    if (contract && address) {
+      const nfts = await contract?.getOwned(address);
+      setOwnedNfts(nfts);
+    }
+  }, [contract]);
+
+  useEffect(() => {
+    loadNft();
+  }, [loadNft]);
+
   const {
     handleSubmit,
     register,
@@ -78,7 +103,7 @@ const Profile = () => {
     }
   };
 
-  if (isLoading) {
+  if (isProfileLoading) {
     return (
       <VStack flex="1" justify="start" align="center">
         <Container maxW="container.lg">
@@ -214,8 +239,32 @@ const Profile = () => {
           </Center>
         </Flex>
 
-        <Center>
-          <Text>Your quests</Text>
+        {ownedNfts && (
+          <>
+            <Center bg="accent" p={4} borderRadius={"md"}>
+              <Text textColor="primary" fontWeight={"bold"}>
+                Your badges
+              </Text>
+            </Center>
+            <SimpleGrid
+              justifyItems="center"
+              py={8}
+              columns={[1, 2, 3]}
+              spacing="40px"
+            >
+              {ownedNfts?.map((nft: any, index: any) => (
+                <Box key={index} py={8} boxSize={"200px"}>
+                  <ThirdwebNftMedia metadata={nft.metadata} />
+                </Box>
+              ))}
+            </SimpleGrid>
+          </>
+        )}
+
+        <Center bg="accent" p={4} borderRadius={"md"}>
+          <Text textColor="primary" fontWeight={"bold"}>
+            Your quests
+          </Text>
         </Center>
         <SimpleGrid py={8} columns={[1, 2, 3]} spacing="40px">
           {user?.quests?.map((quest) => (

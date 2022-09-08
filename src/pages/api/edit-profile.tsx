@@ -30,11 +30,16 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const chainOrRpc = process.env.CHAIN_OR_RPC || "polygon";
-
+  const RPC_URL = process.env.RPC_URL;
+  if (!RPC_URL) {
+    console.error("Missing RPC_URL environment variable");
+    return res.status(500).json({
+      error: "RPC URL key not set",
+    });
+  }
   const sdk = ThirdwebSDK.fromPrivateKey(
     process.env.ADMIN_PRIVATE_KEY as string,
-    chainOrRpc
+    RPC_URL
   );
 
   // Authenticate token with the SDK
