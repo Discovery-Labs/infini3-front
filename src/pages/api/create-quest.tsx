@@ -42,9 +42,11 @@ const createQuest = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
+  const chainOrRpc = process.env.CHAIN_OR_RPC || "polygon";
+
   const sdk = ThirdwebSDK.fromPrivateKey(
     process.env.ADMIN_PRIVATE_KEY as string,
-    "mainnet"
+    chainOrRpc
   );
 
   // Authenticate token with the SDK

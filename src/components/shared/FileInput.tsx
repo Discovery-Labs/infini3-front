@@ -58,7 +58,6 @@ export const FileInput: React.FC<IFileInputProps> = ({
 
   //   const file: File | null = value instanceof File ? value : null;
   const file: File | null = value as File | null;
-  console.log("🚀 ~ file: FileInput.tsx ~ line 63 ~ file", file);
   const fileUrl = useImageFileOrUrl(value);
 
   const helperTextOrFile = helperText

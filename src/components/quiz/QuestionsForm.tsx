@@ -62,10 +62,7 @@ export default function Questions() {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(
-      "🚀 ~ file: QuestionsForm.tsx ~ line 65 ~ onSubmit ~ data",
-      data
-    );
+
     if (data.questions === undefined || data.questions.length === 0) {
       alert("Create a least 1 question");
       return;
