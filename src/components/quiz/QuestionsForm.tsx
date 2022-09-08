@@ -98,21 +98,26 @@ export default function Questions() {
   return (
     <VStack w="full">
       <form style={{ width: "inherit" }} onSubmit={handleSubmit(onSubmit)}>
-        <FormControl display="flex" flexDirection="column">
-          <FormLabel>Image</FormLabel>
-          <FileInput
-            accept={{ "image/*": [] }}
-            value={useImageFileOrUrl(watch("image"))}
-            setValue={(file) => setValue("image", file, { shouldTouch: true })}
-            border="1px solid"
-            borderColor="gray.200"
-            borderRadius="md"
-            transition="all 200ms ease"
-          />
-          <FormErrorMessage>
-            {questions && questions["image"].error?.message}
-          </FormErrorMessage>
-        </FormControl>
+        <Flex flexShrink={0} flexGrow={1} maxW={{ base: "100%", md: "160px" }}>
+          <FormControl display="flex" flexDirection="column">
+            <FormLabel>Image</FormLabel>
+            <FileInput
+              accept={{ "image/*": [] }}
+              value={useImageFileOrUrl(watch("image"))}
+              setValue={(file) =>
+                setValue("image", file, { shouldTouch: true })
+              }
+              border="1px solid"
+              borderColor="gray.200"
+              borderRadius="md"
+              transition="all 200ms ease"
+            />
+            <FormErrorMessage>
+              {questions && questions["image"].error?.message}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+
         <FormControl id="title">
           <FormLabel>Title</FormLabel>
           <Input
