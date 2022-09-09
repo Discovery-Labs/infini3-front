@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import Questions from "components/quiz/QuestionsForm";
+import QuestionsForm from "components/quiz/QuestionsForm";
 import { Heading } from "tw-components";
 import NextLink from "next/link";
 
@@ -40,7 +40,7 @@ const Create = () => {
                   </NextLink>
                 </Text>
               </Stack>
-              <Questions />
+              <QuestionsForm />
             </Flex>
           </Stack>
         </Flex>
