@@ -56,6 +56,15 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
+    await prisma.users.update({
+      where: { id: userId },
+      data: {
+        experience: {
+          increment: 10,
+        },
+      },
+    });
+
     const signedPayload = await contract.signature.generateFromTokenId({
       tokenId: tokenId,
       quantity: "1",
