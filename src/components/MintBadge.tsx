@@ -13,6 +13,7 @@ import useAuthenticate from "hooks/useAuthenticate";
 import useMint from "hooks/useCreateMint";
 import { useEffect, useState } from "react";
 import { Heading } from "tw-components";
+import toast, { Toaster } from "react-hot-toast";
 
 const MintBadge = ({
   tokenId,
@@ -46,6 +47,10 @@ const MintBadge = ({
   const mint = async () => {
     setIsMinting(true);
 
+    const toastId = toast.loading("Minting...", {
+      position: "top-center",
+      style: { backgroundColor: "#171923", color: "white" },
+    });
     try {
       if (isMismatched && switchNetwork) {
         switchNetwork(DESIRED_CHAIN_ID);
@@ -57,8 +62,14 @@ const MintBadge = ({
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
-      return tx;
+
+      toast.success(`Success! ${tx.id.toString().slice(0, 6)}...`, {
+        id: toastId,
+      });
     } catch (err) {
+      toast.error("Something went wrong :(", {
+        id: toastId,
+      });
       console.error(err);
       return null;
     } finally {
@@ -79,6 +90,7 @@ const MintBadge = ({
         justify="space-between"
         direction="column"
       >
+        <Toaster />
         <Flex
           w="full"
           align={"center"}

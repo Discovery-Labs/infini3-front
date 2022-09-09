@@ -30,6 +30,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { FileInput } from "components/shared/FileInput";
 import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Questions() {
   const isMismatched = useNetworkMismatch();
@@ -70,17 +71,30 @@ export default function Questions() {
     if (isMismatched && switchNetwork) {
       switchNetwork(DESIRED_CHAIN_ID);
     }
-    await login();
-    // Create NFT Mint
-    const signedPayload = await createMint({
-      name: data.title,
-      description: data.description,
+
+    const toastId = toast.loading("Uploading...", {
+      position: "top-center",
+      style: { backgroundColor: "#171923", color: "white" },
     });
     try {
+      await login();
+
+      // Create NFT Mint
+      const signedPayload = await createMint({
+        name: data.title,
+        description: data.description,
+      });
       if (!contract) return;
       const tx = await contract.signature.mint(signedPayload);
       data.tokenId = tx.id.toNumber();
+
+      toast.success("Success!", {
+        id: toastId,
+      });
     } catch (err) {
+      toast.error("Something went wrong :(", {
+        id: toastId,
+      });
       console.error(err);
       return;
     }
@@ -106,6 +120,7 @@ export default function Questions() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Toaster />
       <VStack w="full">
         <form style={{ width: "inherit" }} onSubmit={handleSubmit(onSubmit)}>
           <Flex
