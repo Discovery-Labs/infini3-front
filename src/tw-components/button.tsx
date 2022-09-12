@@ -15,7 +15,11 @@ import { shortenIfAddress } from "core/utils/usedapp-external";
 import NextLink from "next/link";
 import React from "react";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
-import { fontWeights, letterSpacings, lineHeights } from "@discovery-dao/infini-ui";
+import {
+  fontWeights,
+  letterSpacings,
+  lineHeights,
+} from "@discovery-dao/infini-ui";
 import { Card } from "./card";
 import { Text } from "./text";
 import { convertFontSizeToCSSVar } from "./utils/typography";

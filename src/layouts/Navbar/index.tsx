@@ -12,16 +12,24 @@ import {
   Icon,
   IconButton,
   Link,
+  useColorModeValue,
   useDisclosure,
   VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import ThemeToggle from "components/buttons/ThemeToggle";
+import { ConnectWallet } from "@thirdweb-dev/react";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
-Link;
+import ThemeToggle from "../../components/Button/ThemeToggle";
+React.useLayoutEffect = React.useEffect;
+
+import { useAddress } from "@thirdweb-dev/react";
+import useAuthenticate from "hooks/useAuthenticate";
+
 const LinkItem = ({ href, children, ...props }: any) => {
   const { pathname } = useRouter();
 
@@ -46,7 +54,7 @@ const LinkItems = () => {
   return (
     <>
       <LinkItem href="/">Adventure</LinkItem>
-      <LinkItem href="/example">ExampleUI</LinkItem>
+      <LinkItem href="/profile">Profile</LinkItem>
       <Link
         display="inline-flex"
         alignItems="center"
@@ -64,6 +72,18 @@ const LinkItems = () => {
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const address = useAddress();
+  const { logout } = useAuthenticate();
+  const isMobile = useBreakpointValue(
+    { base: true, md: false },
+    { ssr: false }
+  );
+
+  useEffect(() => {
+    if (!address) {
+      logout();
+    }
+  }, [address]);
 
   return (
     <Box as="nav" w="100%" top="0" zIndex={1}>
@@ -82,7 +102,7 @@ const Navbar = () => {
                 transform: "rotate(-5deg)",
               }}
             >
-              dCompass quest
+              {isMobile ? "quest" : "dCompass quest"}
             </Link>
           </NextLink>
           <HStack px="2" spacing="4" display={{ base: "none", md: "flex" }}>
@@ -91,7 +111,7 @@ const Navbar = () => {
         </HStack>
 
         <HStack marginLeft="auto">
-          <ConnectButton />
+          <ConnectWallet colorMode={useColorModeValue("light", "dark")} />
           <ThemeToggle display={{ base: "none", md: "flex" }} />
           <IconButton
             size="md"

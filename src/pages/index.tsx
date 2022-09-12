@@ -1,15 +1,16 @@
 import {
   Box,
+  chakra,
   Container,
   Flex,
   Image,
   SimpleGrid,
   VStack,
-  chakra,
 } from "@chakra-ui/react";
+import GridOfCards from "components/GridOfQuestCards";
+import { isValidMotionProp, motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { Heading, LinkButton } from "tw-components";
-import { motion, isValidMotionProp } from "framer-motion";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
@@ -18,7 +19,7 @@ const ChakraBox = chakra(motion.div, {
 const Home = () => {
   FaRocket;
   return (
-    <VStack flex="1" justify="center">
+    <VStack flex="1" justify="start" align="center">
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 6, md: 8 }}>
           <Flex
@@ -40,20 +41,6 @@ const Home = () => {
             >
               Learn by completing quest.
             </Heading>
-            <ChakraBox
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ transition: "0.1", ease: "easeOut" }}
-            >
-              <LinkButton
-                _hover={{ color: "white" }}
-                leftIcon={<FaRocket />}
-                href="/adventure"
-                layerStyle="gradient-bg"
-              >
-                Start the Adventure
-              </LinkButton>
-            </ChakraBox>
           </Flex>
           <Flex justifyContent="flex-end">
             <Image
@@ -66,6 +53,27 @@ const Home = () => {
             />
           </Flex>
         </SimpleGrid>
+      </Container>
+      <Container maxW="container.lg">
+        <Flex justify="center">
+          <ChakraBox
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ transition: "0.1", ease: "easeOut" }}
+          >
+            <LinkButton
+              _hover={{ color: "white" }}
+              leftIcon={<FaRocket />}
+              href="/create"
+              layerStyle="gradient-bg"
+            >
+              Create Quest!
+            </LinkButton>
+          </ChakraBox>
+        </Flex>
+      </Container>
+      <Container maxW="container.lg">
+        <GridOfCards />
       </Container>
     </VStack>
   );

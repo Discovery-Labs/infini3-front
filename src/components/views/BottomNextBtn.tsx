@@ -1,72 +1,70 @@
 import { Box, Container, Flex, Stack } from "@chakra-ui/react";
-import useStore, { AdventureEnum } from "core/states";
-import { Button, Text } from "tw-components";
+// import useStore from "core/state";
+import { Button } from "tw-components";
 
 interface BottomNextBtnProps {
-  isLast?: boolean;
-  isCompleted?: boolean;
-  adventureState: AdventureEnum;
+  guideNext: () => void;
+  isLast: boolean;
 }
 
 const BottomNextBtn = ({
-  isLast = false,
-  isCompleted = false,
-  adventureState,
-}: BottomNextBtnProps) => {
-  const { setAdventureState } = useStore();
+  guideNext,
+  isLast,
+}: // adventureState,
+BottomNextBtnProps) => {
+  // const { setAdventureState } = useStore();
 
-  const SuccessText = () => {
-    const sentences = [
-      "Awesome!",
-      "Nicely done!",
-      "Great!",
-      "Amazing!",
-      "Nice!",
-      "Excellent!",
-      "Nice job!",
-      "Wagmi",
-      "Great job!",
-      "LFG!!!",
-    ];
+  // const SuccessText = () => {
+  //   const sentences = [
+  //     "Awesome!",
+  //     "Nicely done!",
+  //     "Great!",
+  //     "Amazing!",
+  //     "Nice!",
+  //     "Excellent!",
+  //     "Nice job!",
+  //     "Wagmi",
+  //     "Great job!",
+  //     "LFG!!!",
+  //   ];
 
-    return (
-      <>
-        {isCompleted ? (
-          <Flex>
-            <Text size="body.2xl" color="primary" fontWeight="bold" pb="4">
-              {sentences[Math.floor(Math.random() * sentences.length)]}
-            </Text>
-          </Flex>
-        ) : (
-          <Box></Box>
-        )}
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       {isCompleted ? (
+  //         <Flex>
+  //           <Text size="body.2xl" color="primary" fontWeight="bold" pb="4">
+  //             {sentences[Math.floor(Math.random() * sentences.length)]}
+  //           </Text>
+  //         </Flex>
+  //       ) : (
+  //         <Box></Box>
+  //       )}
+  //     </>
+  //   );
+  // };
 
   const NavButton = () => {
     return (
       <>
-        {isLast ? (
+        {/* {isLast ? (
           <Button
             w="full"
             onClick={() => {
-              setAdventureState(AdventureEnum.StepOne);
+              // setAdventureState(AdventureEnum.StepOne);
             }}
           >
             Restart
           </Button>
-        ) : (
-          <Button
-            w={{ base: "full", md: "md" }}
-            disabled={!isCompleted}
-            onClick={() => {
-              setAdventureState(adventureState);
-            }}
-          >
-            Next
-          </Button>
-        )}
+        ) : ( */}
+        <Button
+          w={{ base: "full", md: "md" }}
+          onClick={() => {
+            guideNext();
+          }}
+        >
+          {isLast ? "Submit" : "Next"}
+        </Button>
+        {/* )} */}
       </>
     );
   };
@@ -75,17 +73,14 @@ const BottomNextBtn = ({
     <Box position="relative" height="120px" w="full">
       <Stack
         w="full"
-        bg={isCompleted ? "accent" : ""}
+        // bg={isCompleted ? "accent" : ""}
         py={4}
         position="absolute"
         bottom={0}
       >
         <Container maxW="container.lg">
-          <Flex
-            direction={{ base: "column", md: "row" }}
-            justify="space-between"
-          >
-            <SuccessText />
+          <Flex direction={{ base: "column", md: "row" }} justify="end">
+            {/* <SuccessText /> */}
             <NavButton />
           </Flex>
         </Container>
