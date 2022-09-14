@@ -8,6 +8,8 @@ import {
   HStack,
   Input,
   VStack,
+  useColorModeValue,
+  Icon,
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
 import {
@@ -27,7 +29,7 @@ import useCreateQuest from "../../hooks/useCreateQuest";
 import ControlledSelect from "./ControlledSelect";
 import OptionsFieldArray from "./OptionsFieldArray";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import { GrDrag } from "react-icons/gr";
 import { FileInput } from "components/shared/FileInput";
 import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
 import toast, { Toaster } from "react-hot-toast";
@@ -52,6 +54,7 @@ export default function Questions() {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm();
+  const bgColor = useColorModeValue("white", "gray.900");
 
   const { questions } = errors as any;
 
@@ -197,13 +200,16 @@ export default function Questions() {
                       >
                         {(provided: any) => (
                           <VStack
+                            w="full"
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            w="full"
+                            bg={bgColor}
                             pt="8"
                           >
-                            <Heading>{index + 1}: Guide</Heading>
+                            <HStack {...provided.dragHandleProps}>
+                              <Icon as={GrDrag} w={6} h={6} color={"white"} />
+                              <Heading>{index + 1}: Guide</Heading>
+                            </HStack>
                             <FormControl
                               isInvalid={
                                 questions &&
@@ -258,13 +264,16 @@ export default function Questions() {
                     >
                       {(provided: any) => (
                         <VStack
+                          w="full"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          w="full"
+                          bg={bgColor}
                           pt="8"
                         >
-                          <Heading>{index + 1}: Question</Heading>
+                          <HStack {...provided.dragHandleProps}>
+                            <Icon as={GrDrag} w={6} h={6} color={"white"} />
+                            <Heading>{index + 1}: Question</Heading>
+                          </HStack>
                           <FormControl
                             isInvalid={
                               questions &&
