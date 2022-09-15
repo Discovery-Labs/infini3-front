@@ -129,7 +129,8 @@ export const FileInput: React.FC<IFileInputProps> = ({
             bg={fileUrl ? "transparent" : "inputBg"}
             _hover={{
               bg: "inputBgHover",
-              borderColor: "blue.500",
+              borderColor: "primary",
+              borderWidth: "2px",
             }}
             borderColor="inputBorder"
             borderWidth="1px"
@@ -141,7 +142,7 @@ export const FileInput: React.FC<IFileInputProps> = ({
               <Stack align="center" color="gray.600">
                 <Icon boxSize={6} as={FiImage} />
                 {/* <Text color="gray.600">{fileType} uploaded</Text> */}
-                <Text color="gray.600">uploaded</Text>
+                <Text color="gray.600">upload</Text>
               </Stack>
             ) : fileUrl ? (
               renderPreview ? (

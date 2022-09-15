@@ -44,7 +44,7 @@ const Profile = () => {
   const grayTextColor = useColorModeValue("gray.700", "gray.400");
   const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
   const contract = useEdition(contractAddress);
-  const [ownedNfts, setOwnedNfts] = useState<any>();
+  const [ownedNfts, setOwnedNfts] = useState<Array<any>>();
 
   const loadNft = useCallback(async () => {
     if (contract && address) {
@@ -252,7 +252,7 @@ const Profile = () => {
               columns={[1, 2, 3]}
               spacing="40px"
             >
-              {ownedNfts?.map((nft: any, index: any) => (
+              {ownedNfts?.reverse().map((nft: any, index: any) => (
                 <Box key={index} py={8} boxSize={"200px"}>
                   <ThirdwebNftMedia metadata={nft.metadata} />
                 </Box>
