@@ -10,9 +10,11 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
   SimpleGrid,
   Skeleton,
   Text,
+  Tooltip,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
@@ -23,6 +25,7 @@ import {
   useMetamask,
 } from "@thirdweb-dev/react";
 import QuestCard from "components/QuestCard";
+import { OPENSEA_BASE_URL } from "core/utils/constants";
 import useAuthenticate from "hooks/useAuthenticate";
 import useProfile from "hooks/useProfile";
 import { useCallback, useEffect, useState } from "react";
@@ -253,9 +256,32 @@ const Profile = () => {
               spacing="40px"
             >
               {ownedNfts?.reverse().map((nft: any, index: any) => (
-                <Box key={index} py={8} boxSize={"200px"}>
-                  <ThirdwebNftMedia metadata={nft.metadata} />
-                </Box>
+                <VStack key={index}>
+                  <Tooltip label={nft.metadata.description}>
+                    <Link
+                      href={`${OPENSEA_BASE_URL}${contractAddress}/${nft.metadata.id.toString()}`}
+                    >
+                      <Box
+                        border="2px solid #6F3FF5"
+                        borderRadius="full"
+                        w="fit-content"
+                        h="fit-content"
+                        p="2"
+                      >
+                        <ThirdwebNftMedia
+                          style={{
+                            width: "200px",
+                            height: "200px",
+                            objectFit: "cover",
+                            borderRadius: "50%",
+                          }}
+                          metadata={nft.metadata}
+                        />
+                      </Box>
+                    </Link>
+                  </Tooltip>
+                  <Text>{nft.metadata.name}</Text>
+                </VStack>
               ))}
             </SimpleGrid>
           </>

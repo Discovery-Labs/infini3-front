@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import {
-  ChainId,
   ThirdwebNftMedia,
   useAddress,
   useEdition,
@@ -9,12 +8,12 @@ import {
   useNetworkMismatch,
   useNFT,
 } from "@thirdweb-dev/react";
-import { DESIRED_CHAIN_ID } from "core/utils/constants";
+import { DESIRED_CHAIN_ID, EXPLORER_BASE_URL } from "core/utils/constants";
 import useAuthenticate from "hooks/useAuthenticate";
 import useMint from "hooks/useCreateMint";
 import { useEffect, useState } from "react";
-import { Heading } from "tw-components";
 import toast, { Toaster } from "react-hot-toast";
+import { Heading } from "tw-components";
 
 const MintBadge = ({
   tokenId,
@@ -36,11 +35,6 @@ const MintBadge = ({
   const { data: nft, isLoading } = useNFT(contract, tokenId);
   const [isMinted, setIsMinted] = useState(true);
   const [isMinting, setIsMinting] = useState(false);
-
-  const explorerUrl =
-    DESIRED_CHAIN_ID === ChainId.Mumbai
-      ? "https://mumbai.polygonscan.com/tx/"
-      : "https://polygonscan.com/tx/";
 
   useEffect(() => {
     const getNftBalance = async () => {
@@ -77,7 +71,7 @@ const MintBadge = ({
 
       toast.success(
         <div>
-          <a href={`${explorerUrl}${tx.id.toString()}`}>
+          <a href={`${EXPLORER_BASE_URL}tx/${tx.id.toString()}`}>
             Click HERE to see your transaction. You can find the badge in your
             profile :)
           </a>
