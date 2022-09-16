@@ -3,17 +3,17 @@ import create from "zustand";
 interface AdventureState {
   questionIndex: number;
   nextQuestion: () => void;
-  correct: number;
-  answered: number;
-  incrementCorrect: () => void;
+  corrects: number;
+  totalAnswered: number;
+  incrementCorrects: () => void;
   incrementAnswered: () => void;
   reset: () => void;
 }
 
 const initialState: Partial<AdventureState> = {
   questionIndex: 0,
-  correct: 0,
-  answered: 0,
+  corrects: 0,
+  totalAnswered: 0,
 };
 
 // zustand merge only first level. second level looks like questionIndex: { count: 0 }
@@ -25,17 +25,17 @@ const useStore = create<AdventureState>((set) => ({
       questionIndex: state.questionIndex + 1,
     }));
   },
-  correct: 0,
-  answered: 0,
-  incrementCorrect: () => {
+  corrects: 0,
+  totalAnswered: 0,
+  incrementCorrects: () => {
     set((state) => ({
-      correct: state.correct + 1,
-      answered: state.answered + 1,
+      corrects: state.corrects + 1,
+      totalAnswered: state.totalAnswered + 1,
     }));
   },
   incrementAnswered: () => {
     set((state) => ({
-      answered: state.answered + 1,
+      totalAnswered: state.totalAnswered + 1,
     }));
   },
   reset: () => {

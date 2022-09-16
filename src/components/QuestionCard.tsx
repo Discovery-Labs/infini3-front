@@ -29,10 +29,10 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   const {
     questionIndex,
     nextQuestion,
-    incrementCorrect,
+    incrementCorrects,
     incrementAnswered,
-    correct,
-    answered,
+    corrects,
+    totalAnswered,
     reset,
   } = useStore();
 
@@ -49,10 +49,10 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   const isLast = questionIndex === questionsLength;
 
   const openModal = useCallback(() => {
-    if (isFinished && correct !== answered) {
+    if (isFinished && corrects !== totalAnswered) {
       onOpen();
     }
-  }, [answered, correct, isFinished, onOpen]);
+  }, [totalAnswered, corrects, isFinished, onOpen]);
   useEffect(() => {
     openModal();
   }, [openModal]);
@@ -68,11 +68,11 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   }, [isLast, nextQuestion]);
 
   const questionNext = (option?: string) => {
-    answer === option ? incrementCorrect() : incrementAnswered();
+    answer === option ? incrementCorrects() : incrementAnswered();
     isLast ? setIsFinished(true) : nextQuestion();
   };
 
-  if (isFinished && correct === answered) {
+  if (isFinished && corrects === totalAnswered) {
     return (
       <VStack alignSelf="center" flex="1" justify="center">
         <Container
@@ -80,7 +80,11 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           maxW="container.lg"
           alignItems="center"
         >
-          <MintBadge tokenId={token_id} questsId={questsId} />
+          <MintBadge
+            tokenId={token_id}
+            questsId={questsId}
+            experiencePoints={corrects * 10}
+          />
         </Container>
       </VStack>
     );
@@ -101,8 +105,8 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
         <NotSuccessModal
           isOpen={isOpen}
           onClose={onClose}
-          correct={correct}
-          answered={answered}
+          corrects={corrects}
+          totalAnswered={totalAnswered}
           resetQuiz={resetQuiz}
         />
         <Flex
