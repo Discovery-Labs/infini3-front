@@ -8,10 +8,14 @@ export default function useMint() {
     return signedPayload;
   }
 
-  async function mintBadge(tokenId: number, questsId: number) {
+  async function mintBadge(
+    tokenId: number,
+    questsId: number,
+    experiencePoints: number
+  ) {
     const { signedPayload } = await fetch("/api/mint-badge", {
       method: "POST",
-      body: JSON.stringify({ tokenId, questsId }),
+      body: JSON.stringify({ tokenId, questsId, experiencePoints }),
     }).then((res) => res.json());
 
     return signedPayload;

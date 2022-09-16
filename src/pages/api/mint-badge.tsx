@@ -45,7 +45,7 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
   // const contract = await sdk.getBuiltInContract(contractAddress, "edition");
   const contract = await sdk.getEdition(contractAddress);
 
-  const { tokenId, questsId } = JSON.parse(req.body);
+  const { tokenId, questsId, experiencePoints } = JSON.parse(req.body);
   const userId = req.cookies.cuid;
 
   try {
@@ -60,7 +60,7 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
       where: { id: userId },
       data: {
         experience: {
-          increment: 10,
+          increment: experiencePoints,
         },
       },
     });

@@ -18,9 +18,11 @@ import toast, { Toaster } from "react-hot-toast";
 const MintBadge = ({
   tokenId,
   questsId,
+  experiencePoints,
 }: {
   tokenId: number;
   questsId: number;
+  experiencePoints: number;
 }) => {
   const isMismatched = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
@@ -58,7 +60,11 @@ const MintBadge = ({
       await login();
 
       // Mint NFT Badge
-      const signedPayload = await mintBadge(tokenId, questsId);
+      const signedPayload = await mintBadge(
+        tokenId,
+        questsId,
+        experiencePoints
+      );
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
