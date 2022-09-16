@@ -1,3 +1,6 @@
 import { ChainId } from "@thirdweb-dev/react";
 
-export const DESIRED_CHAIN_ID = ChainId.Mumbai;
+const DESIRED_CHAIN = process.env.NEXT_PUBLIC_DESIRED_CHAIN;
+
+export const DESIRED_CHAIN_ID =
+  DESIRED_CHAIN === "mumbai" ? ChainId.Mumbai : ChainId.Polygon;

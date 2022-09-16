@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import {
+  ChainId,
   ThirdwebNftMedia,
   useAddress,
   useEdition,
@@ -36,6 +37,11 @@ const MintBadge = ({
   const [isMinted, setIsMinted] = useState(true);
   const [isMinting, setIsMinting] = useState(false);
 
+  const explorerUrl =
+    DESIRED_CHAIN_ID === ChainId.Mumbai
+      ? "https://mumbai.polygonscan.com/tx/"
+      : "https://polygonscan.com/tx/";
+
   useEffect(() => {
     const getNftBalance = async () => {
       if (!address || !contract) return;
@@ -69,9 +75,19 @@ const MintBadge = ({
 
       const tx = await contract.signature.mint(signedPayload);
 
-      toast.success(`Success! ${tx.id.toString().slice(0, 6)}...`, {
-        id: toastId,
-      });
+      toast.success(
+        <div>
+          <a href={`${explorerUrl}${tx.id.toString()}`}>
+            Click HERE to see your transaction. You can find the badge in your
+            profile :)
+          </a>
+        </div>,
+        {
+          id: toastId,
+          duration: 5000,
+        }
+      );
+      setIsMinted(true);
     } catch (err) {
       toast.error("Something went wrong :(", {
         id: toastId,
@@ -80,7 +96,6 @@ const MintBadge = ({
       return null;
     } finally {
       setIsMinting(false);
-      setIsMinted(true);
     }
   };
 
