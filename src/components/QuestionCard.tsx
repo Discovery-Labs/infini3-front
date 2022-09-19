@@ -6,24 +6,17 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { questions, step_type } from "@prisma/client";
+import { step_type } from "@prisma/client";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import useStore from "core/state";
+import { Quiz } from "hooks/useQuiz";
 import { useCallback, useEffect, useState } from "react";
 import { Heading } from "tw-components";
 import MintBadge from "./MintBadge";
 import { NotSuccessModal } from "./Modal/NotSuccessModal";
 
-interface QuestionCardProps {
-  quiz: (questions & {
-    quests: {
-      token_id: number;
-    };
-  })[];
-}
-
-const QuestionCard = ({ quiz }: QuestionCardProps) => {
+const QuestionCard = ({ quiz }: { quiz: Quiz }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isFinished, setIsFinished] = useState(false);
   const {
@@ -41,11 +34,12 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     reset();
   }, []);
 
-  const { type, guide, question, options, answer, questsId, quests } =
-    quiz[questionIndex];
-  const { token_id } = quests;
+  const { type, guide, question, options, answer, questsId } =
+    quiz.questions[questionIndex];
+  const tokenId = quiz.token_id;
+  const questionsLengthOriginal = quiz.questions.length;
 
-  const questionsLength = quiz.length - 1;
+  const questionsLength = quiz.questions.length - 1;
   const isLast = questionIndex === questionsLength;
 
   const openModal = useCallback(() => {
@@ -81,7 +75,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           alignItems="center"
         >
           <MintBadge
-            tokenId={token_id}
+            tokenId={tokenId}
             questsId={questsId}
             experiencePoints={corrects * 10}
           />
@@ -95,7 +89,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <ProgressBar
           progress={questionIndex}
-          max={quiz.length}
+          max={questionsLengthOriginal}
           hasStripe={true}
         />
         {/* <QuestGuide guide={guide} /> */}
