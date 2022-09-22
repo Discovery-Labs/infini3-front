@@ -33,6 +33,7 @@
     "@thirdweb-dev/react": "^2.7.4",
     "@thirdweb-dev/sdk": "^2.3.42",
     "@types/cookie": "^0.5.1",
+    "alchemy-sdk": "^2.0.5-rc1",
     "axios": "^0.27.2",
     "chakra-react-select": "^4.1.4",
     "color": "^4.2.3",
