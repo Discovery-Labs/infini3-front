@@ -1,10 +1,11 @@
 import { Text, VStack } from "@chakra-ui/react";
+import OverviewCard from "components/OverviewCard";
 import QuestionCard from "components/QuestionCard";
 import useQuiz from "hooks/useQuiz";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Button, Heading } from "tw-components";
+
 const Adventure: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -21,11 +22,7 @@ const Adventure: NextPage = () => {
 
   if (isOverview) {
     return (
-      <VStack flex="1" justify="center" align={"center"} spacing={8}>
-        <Heading>{quiz.title}</Heading>
-        <Text>{quiz.description}</Text>
-        <Button onClick={() => setIsOverview(false)}>Start</Button>
-      </VStack>
+      <>{quiz && <OverviewCard quiz={quiz} setIsOverview={setIsOverview} />}</>
     );
   }
 
