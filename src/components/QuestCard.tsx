@@ -47,7 +47,7 @@ const QuestCard = ({ quest }: Props) => {
           textAlign="center"
         >
           {!isLoading && nft ? (
-            <Box py={8} boxSize={"200px"}>
+            <Box boxSize={"200px"} alignContent="center" textAlign="center">
               <ThirdwebNftMedia metadata={nft.metadata} />
             </Box>
           ) : (

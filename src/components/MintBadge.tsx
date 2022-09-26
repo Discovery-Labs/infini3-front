@@ -71,7 +71,7 @@ const MintBadge = ({
 
       toast.success(
         <div>
-          <a href={`${EXPLORER_BASE_URL}tx/${tx.id.toString()}`}>
+          <a href={`${EXPLORER_BASE_URL}tx/${tx.receipt.transactionHash}`}>
             Click HERE to see your transaction. You can find the badge in your
             profile :)
           </a>
