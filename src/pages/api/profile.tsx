@@ -33,7 +33,11 @@ const profile = async (req: NextApiRequest, res: NextApiResponse) => {
     profile = await prisma.users.findUnique({
       where: { address: address },
       include: {
-        quests: true,
+        quests: {
+          orderBy: {
+            id: "desc",
+          },
+        },
         completed_quests: { select: { id: true } },
       },
     });

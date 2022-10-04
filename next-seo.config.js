@@ -1,6 +1,6 @@
 export const appStaticContent = {
   currentAppLink: "https://dcompass.xyz",
-  name: "dCompass Quest",
+  name: "Quest",
   description: "LEARN WEB3 BY COMPLETING QUEST.",
 };
 

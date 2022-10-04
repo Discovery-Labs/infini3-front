@@ -13,16 +13,16 @@ interface NotSuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
   resetQuiz: () => void;
-  correct: number;
-  answered: number;
+  corrects: number;
+  totalAnswered: number;
 }
 
 export const NotSuccessModal = ({
   isOpen,
   onClose,
   resetQuiz,
-  correct,
-  answered,
+  corrects,
+  totalAnswered,
 }: NotSuccessModalProps) => {
   //   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -37,7 +37,7 @@ export const NotSuccessModal = ({
           </ModalHeader>
           <ModalBody pb={6}>
             <Text>
-              You answer correctly: {correct}/{answered}
+              You answer correctly: {corrects}/{totalAnswered}
             </Text>
           </ModalBody>
 

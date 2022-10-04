@@ -45,8 +45,21 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
   // const contract = await sdk.getBuiltInContract(contractAddress, "edition");
   const contract = await sdk.getEdition(contractAddress);
 
-  const { tokenId, questsId } = JSON.parse(req.body);
+  const { tokenId, questsId, experiencePoints } = JSON.parse(req.body);
   const userId = req.cookies.cuid;
+
+  function makeBountyId(length: number) {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  console.log(makeBountyId(6));
 
   try {
     await prisma.quests_users.create({
@@ -60,7 +73,7 @@ const mintBadge = async (req: NextApiRequest, res: NextApiResponse) => {
       where: { id: userId },
       data: {
         experience: {
-          increment: 10,
+          increment: experiencePoints,
         },
       },
     });

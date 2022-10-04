@@ -1,6 +1,10 @@
-import { questions } from "@prisma/client";
+import { questions, quests } from "@prisma/client";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+
+export type Quiz = quests & {
+  questions: questions[];
+};
 
 const fetcher = async (url: string, questId: number) =>
   fetch(url, {
@@ -23,11 +27,7 @@ export default function useQuiz(questId: number) {
   }, [questId]);
 
   return {
-    quiz: data as (questions & {
-      quests: {
-        token_id: number;
-      };
-    })[],
+    quiz: data as Quiz,
     isLoading: !error && !data,
     isError: error,
   };

@@ -3,19 +3,19 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const quiz = async (req: NextApiRequest, res: NextApiResponse) => {
   const { questId } = JSON.parse(req.body);
-  const questions = await prisma.questions.findMany({
-    where: { questsId: questId },
-    orderBy: { itemIndex: "asc" },
+
+  const questWithQuestions = await prisma.quests.findUnique({
+    where: {
+      id: questId,
+    },
     include: {
-      quests: {
-        select: {
-          token_id: true,
-        },
+      questions: {
+        orderBy: { itemIndex: "asc" },
       },
     },
   });
 
-  res.status(200).json(questions);
+  res.status(200).json(questWithQuestions);
 };
 
 export default quiz;

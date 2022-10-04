@@ -102,7 +102,7 @@ const Navbar = () => {
                 transform: "rotate(-5deg)",
               }}
             >
-              {isMobile ? "quest" : "dCompass quest"}
+              {isMobile ? "Quest" : "Quest"}
             </Link>
           </NextLink>
           <HStack px="2" spacing="4" display={{ base: "none", md: "flex" }}>

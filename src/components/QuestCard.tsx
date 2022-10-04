@@ -1,5 +1,6 @@
 import { Box, Flex, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
 import { quests } from "@prisma/client";
+import { ThirdwebNftMedia, useEdition, useNFT } from "@thirdweb-dev/react";
 import { LinkButton } from "tw-components";
 
 interface Props {
@@ -12,7 +13,10 @@ interface Props {
 }
 
 const QuestCard = ({ quest }: Props) => {
-  const { id: questId, title, description, tags, author } = quest;
+  const { id: questId, title, description, tags, author, token_id } = quest;
+  const contractAddress = process.env.NEXT_PUBLIC_EDITION_ADDRESS || "";
+  const contract = useEdition(contractAddress);
+  const { data: nft, isLoading } = useNFT(contract, token_id);
 
   return (
     <Flex
@@ -35,10 +39,25 @@ const QuestCard = ({ quest }: Props) => {
         <Text pt={2} fontWeight="light" size="text.small" color="gray.400">
           {author?.username || ""}
         </Text>
-        <Text noOfLines={3} pt={2} fontWeight="bold" size="text.medium">
+        <Flex
+          w="full"
+          align={"center"}
+          direction="column"
+          overflow="hidden"
+          textAlign="center"
+        >
+          {!isLoading && nft ? (
+            <Box boxSize={"200px"} alignContent="center" textAlign="center">
+              <ThirdwebNftMedia metadata={nft.metadata} />
+            </Box>
+          ) : (
+            <p>Loading NFT...</p>
+          )}
+        </Flex>
+        <Text noOfLines={1} pt={2} fontWeight="bold" size="text.medium">
           {title}
         </Text>
-        <Text noOfLines={5} color="gray.400">
+        <Text noOfLines={1} color="gray.400">
           {description}
         </Text>
       </Flex>

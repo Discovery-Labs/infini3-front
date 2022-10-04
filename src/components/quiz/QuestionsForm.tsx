@@ -7,34 +7,38 @@ import {
   FormLabel,
   HStack,
   Input,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
+import { DragHandleIcon } from "@chakra-ui/icons";
 import {
   useAddress,
   useEdition,
   useMetamask,
   useNetwork,
   useNetworkMismatch,
+  useSigner,
 } from "@thirdweb-dev/react";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { FileInput } from "components/shared/FileInput";
 import { DESIRED_CHAIN_ID } from "core/utils/constants";
 import useMint from "hooks/useCreateMint";
+import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
 import { useRouter } from "next/router";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useFieldArray, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { Heading } from "tw-components";
 import useAuthenticate from "../../hooks/useAuthenticate";
 import useCreateQuest from "../../hooks/useCreateQuest";
 import ControlledSelect from "./ControlledSelect";
 import OptionsFieldArray from "./OptionsFieldArray";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-import { FileInput } from "components/shared/FileInput";
-import { useImageFileOrUrl } from "hooks/useImageFileOrUrl";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function Questions() {
-  const isMismatched = useNetworkMismatch();
+  const isOnWrongNetwork = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
+  const signer = useSigner();
   const router = useRouter();
   const { login } = useAuthenticate();
   const { createQuest } = useCreateQuest();
@@ -52,6 +56,7 @@ export default function Questions() {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm();
+  const bgColor = useColorModeValue("white", "gray.900");
 
   const { questions } = errors as any;
 
@@ -68,8 +73,15 @@ export default function Questions() {
       alert("Create a least 1 question");
       return;
     }
-    if (isMismatched && switchNetwork) {
+
+    if (!address) {
+      connectWithMetamask();
+      return;
+    }
+
+    if (isOnWrongNetwork && switchNetwork) {
       switchNetwork(DESIRED_CHAIN_ID);
+      return;
     }
 
     const toastId = toast.loading("Uploading...", {
@@ -77,12 +89,28 @@ export default function Questions() {
       style: { backgroundColor: "#171923", color: "white" },
     });
     try {
+      if (!data.image) {
+        alert("Please upload a file.");
+        return;
+      }
+
+      if (!address || !signer) {
+        alert("Please connect to your wallet.");
+        return;
+      }
+
       await login();
+
+      // Upload image to IPFS using the sdk.storage
+      const tw = new ThirdwebSDK(signer);
+      const ipfsHash = await tw.storage.upload(data.image);
+      const imagePath = `${ipfsHash.uris[0]}`;
 
       // Create NFT Mint
       const signedPayload = await createMint({
         name: data.title,
         description: data.description,
+        imagePath: imagePath,
       });
       if (!contract) return;
       const tx = await contract.signature.mint(signedPayload);
@@ -121,65 +149,67 @@ export default function Questions() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Toaster />
-      <VStack w="full">
+      <VStack w="full" align={"start"} spacing={2}>
         <form style={{ width: "inherit" }} onSubmit={handleSubmit(onSubmit)}>
-          <Flex
-            flexShrink={0}
-            flexGrow={1}
-            maxW={{ base: "100%", md: "160px" }}
-          >
-            <FormControl display="flex" flexDirection="column">
-              <FormLabel>Image</FormLabel>
-              <FileInput
-                accept={{ "image/*": [] }}
-                value={useImageFileOrUrl(watch("image"))}
-                setValue={(file) =>
-                  setValue("image", file, { shouldTouch: true })
-                }
-                border="1px solid"
-                borderColor="gray.200"
-                borderRadius="md"
-                transition="all 200ms ease"
+          <Flex direction={"column"} gap="2">
+            <Flex
+              flexShrink={0}
+              flexGrow={1}
+              maxW={{ base: "100%", md: "160px" }}
+            >
+              <FormControl display="flex" flexDirection="column">
+                <FormLabel>Image</FormLabel>
+                <FileInput
+                  accept={{ "image/*": [] }}
+                  value={useImageFileOrUrl(watch("image"))}
+                  setValue={(file) =>
+                    setValue("image", file, { shouldTouch: true })
+                  }
+                  border="1px solid"
+                  borderColor="gray.200"
+                  borderRadius="md"
+                  transition="all 200ms ease"
+                />
+                <FormErrorMessage>
+                  {questions && questions["image"]?.error?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Flex>
+
+            <FormControl id="title">
+              <FormLabel>Title</FormLabel>
+              <Input
+                type="text"
+                {...register("title", {
+                  required: "This is required",
+                })}
               />
-              <FormErrorMessage>
-                {questions && questions["image"]?.error?.message}
-              </FormErrorMessage>
+            </FormControl>
+            <FormControl id="description">
+              <FormLabel>Description</FormLabel>
+              <Input
+                type="text"
+                {...register("description", {
+                  required: "This is required",
+                })}
+              />
+            </FormControl>
+            <FormControl id="tags">
+              <FormLabel>Tags (Separate with comma)</FormLabel>
+              <Input
+                type="text"
+                {...register("tags", {
+                  required: "This is required",
+                  maxLength: {
+                    value: 20,
+                    message: "Maximum length should be 20",
+                  },
+                })}
+              />
             </FormControl>
           </Flex>
 
-          <FormControl id="title">
-            <FormLabel>Title</FormLabel>
-            <Input
-              type="text"
-              {...register("title", {
-                required: "This is required",
-              })}
-            />
-          </FormControl>
-          <FormControl id="description">
-            <FormLabel>Description</FormLabel>
-            <Input
-              type="text"
-              {...register("description", {
-                required: "This is required",
-              })}
-            />
-          </FormControl>
-          <FormControl id="tags">
-            <FormLabel>Tags (Separate with comma)</FormLabel>
-            <Input
-              type="text"
-              {...register("tags", {
-                required: "This is required",
-                maxLength: {
-                  value: 20,
-                  message: "Maximum length should be 20",
-                },
-              })}
-            />
-          </FormControl>
-
-          <Divider bg="none" py="5" />
+          <Divider bg="none" py="2" />
           <Droppable droppableId="droppable">
             {(provided: any) => (
               <div
@@ -197,13 +227,25 @@ export default function Questions() {
                       >
                         {(provided: any) => (
                           <VStack
+                            w="full"
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            w="full"
+                            bg={bgColor}
                             pt="8"
                           >
-                            <Heading>{index + 1}: Guide</Heading>
+                            <HStack
+                              {...provided.dragHandleProps}
+                              w="full"
+                              justify="start"
+                              p={2}
+                              borderRadius="md"
+                              _hover={{
+                                bgColor: "gray.800",
+                              }}
+                            >
+                              <DragHandleIcon w={6} h={6} />
+                              <Heading>{index + 1}: Guide</Heading>
+                            </HStack>
                             <FormControl
                               isInvalid={
                                 questions &&
@@ -258,13 +300,25 @@ export default function Questions() {
                     >
                       {(provided: any) => (
                         <VStack
+                          w="full"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          w="full"
+                          bg={bgColor}
                           pt="8"
                         >
-                          <Heading>{index + 1}: Question</Heading>
+                          <HStack
+                            {...provided.dragHandleProps}
+                            w="full"
+                            justify="start"
+                            p={2}
+                            borderRadius="md"
+                            _hover={{
+                              bgColor: "gray.800",
+                            }}
+                          >
+                            <DragHandleIcon w={6} h={6} />
+                            <Heading>{index + 1}: Question</Heading>
+                          </HStack>
                           <FormControl
                             isInvalid={
                               questions &&

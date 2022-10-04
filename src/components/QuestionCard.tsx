@@ -6,33 +6,26 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { questions, step_type } from "@prisma/client";
+import { step_type } from "@prisma/client";
 import BottomNextBtn from "components/views/BottomNextBtn";
 import ProgressBar from "components/views/ProgressBar";
 import useStore from "core/state";
+import { Quiz } from "hooks/useQuiz";
 import { useCallback, useEffect, useState } from "react";
 import { Heading } from "tw-components";
 import MintBadge from "./MintBadge";
 import { NotSuccessModal } from "./Modal/NotSuccessModal";
 
-interface QuestionCardProps {
-  quiz: (questions & {
-    quests: {
-      token_id: number;
-    };
-  })[];
-}
-
-const QuestionCard = ({ quiz }: QuestionCardProps) => {
+const QuestionCard = ({ quiz }: { quiz: Quiz }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isFinished, setIsFinished] = useState(false);
   const {
     questionIndex,
     nextQuestion,
-    incrementCorrect,
+    incrementCorrects,
     incrementAnswered,
-    correct,
-    answered,
+    corrects,
+    totalAnswered,
     reset,
   } = useStore();
 
@@ -41,18 +34,19 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
     reset();
   }, []);
 
-  const { type, guide, question, options, answer, questsId, quests } =
-    quiz[questionIndex];
-  const { token_id } = quests;
+  const { type, guide, question, options, answer, questsId } =
+    quiz.questions[questionIndex];
+  const tokenId = quiz.token_id;
+  const questionsLengthOriginal = quiz.questions.length;
 
-  const questionsLength = quiz.length - 1;
+  const questionsLength = quiz.questions.length - 1;
   const isLast = questionIndex === questionsLength;
 
   const openModal = useCallback(() => {
-    if (isFinished && correct !== answered) {
+    if (isFinished && corrects !== totalAnswered) {
       onOpen();
     }
-  }, [answered, correct, isFinished, onOpen]);
+  }, [totalAnswered, corrects, isFinished, onOpen]);
   useEffect(() => {
     openModal();
   }, [openModal]);
@@ -68,11 +62,11 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
   }, [isLast, nextQuestion]);
 
   const questionNext = (option?: string) => {
-    answer === option ? incrementCorrect() : incrementAnswered();
+    answer === option ? incrementCorrects() : incrementAnswered();
     isLast ? setIsFinished(true) : nextQuestion();
   };
 
-  if (isFinished && correct === answered) {
+  if (isFinished && corrects === totalAnswered) {
     return (
       <VStack alignSelf="center" flex="1" justify="center">
         <Container
@@ -80,7 +74,11 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
           maxW="container.lg"
           alignItems="center"
         >
-          <MintBadge tokenId={token_id} questsId={questsId} />
+          <MintBadge
+            tokenId={tokenId}
+            questsId={questsId}
+            experiencePoints={corrects * 10}
+          />
         </Container>
       </VStack>
     );
@@ -91,7 +89,7 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
       <Container my={{ base: 4, md: 8 }} maxW="container.lg">
         <ProgressBar
           progress={questionIndex}
-          max={quiz.length}
+          max={questionsLengthOriginal}
           hasStripe={true}
         />
         {/* <QuestGuide guide={guide} /> */}
@@ -101,8 +99,8 @@ const QuestionCard = ({ quiz }: QuestionCardProps) => {
         <NotSuccessModal
           isOpen={isOpen}
           onClose={onClose}
-          correct={correct}
-          answered={answered}
+          corrects={corrects}
+          totalAnswered={totalAnswered}
           resetQuiz={resetQuiz}
         />
         <Flex

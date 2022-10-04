@@ -1,11 +1,12 @@
 import { NATIVE_TOKEN_ADDRESS, ThirdwebSDK } from "@thirdweb-dev/sdk";
-import axios from "axios";
+// import axios from "axios";
 import { constants } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface QuestData {
   name: string;
   description: string;
+  imagePath: string;
 }
 
 const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -53,21 +54,21 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { questData }: { questData: QuestData } = JSON.parse(req.body);
 
-  function getBase64(url: string) {
-    return axios
-      .get(url, {
-        responseType: "arraybuffer",
-      })
-      .then((response) => Buffer.from(response.data, "binary"));
-  }
+  // function getBase64(url: string) {
+  //   return axios
+  //     .get(url, {
+  //       responseType: "arraybuffer",
+  //     })
+  //     .then((response) => Buffer.from(response.data, "binary"));
+  // }
 
   try {
-    const imageData = await getBase64("https://i.imgur.com/irlLOUx.png");
+    // const imageData = await getBase64("https://i.imgur.com/irlLOUx.png");
 
     const nftMetadata = {
       name: questData.name,
       description: questData.description,
-      image: imageData,
+      image: questData.imagePath,
     };
 
     const startTime = new Date();
@@ -77,7 +78,7 @@ const createMint = async (req: NextApiRequest, res: NextApiResponse) => {
       to: address,
       currencyAddress: NATIVE_TOKEN_ADDRESS,
       tokenId: constants.MaxUint256,
-      quantity: 1,
+      quantity: 0,
       mintStartTime: startTime,
     };
 

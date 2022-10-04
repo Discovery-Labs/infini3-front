@@ -8,19 +8,21 @@ import {
   useNetworkMismatch,
   useNFT,
 } from "@thirdweb-dev/react";
-import { DESIRED_CHAIN_ID } from "core/utils/constants";
+import { DESIRED_CHAIN_ID, EXPLORER_BASE_URL } from "core/utils/constants";
 import useAuthenticate from "hooks/useAuthenticate";
 import useMint from "hooks/useCreateMint";
 import { useEffect, useState } from "react";
-import { Heading } from "tw-components";
 import toast, { Toaster } from "react-hot-toast";
+import { Heading } from "tw-components";
 
 const MintBadge = ({
   tokenId,
   questsId,
+  experiencePoints,
 }: {
   tokenId: number;
   questsId: number;
+  experiencePoints: number;
 }) => {
   const isMismatched = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
@@ -58,14 +60,28 @@ const MintBadge = ({
       await login();
 
       // Mint NFT Badge
-      const signedPayload = await mintBadge(tokenId, questsId);
+      const signedPayload = await mintBadge(
+        tokenId,
+        questsId,
+        experiencePoints
+      );
       if (!contract) return;
 
       const tx = await contract.signature.mint(signedPayload);
 
-      toast.success(`Success! ${tx.id.toString().slice(0, 6)}...`, {
-        id: toastId,
-      });
+      toast.success(
+        <div>
+          <a href={`${EXPLORER_BASE_URL}tx/${tx.receipt.transactionHash}`}>
+            Click HERE to see your transaction. You can find the badge in your
+            profile :)
+          </a>
+        </div>,
+        {
+          id: toastId,
+          duration: 5000,
+        }
+      );
+      setIsMinted(true);
     } catch (err) {
       toast.error("Something went wrong :(", {
         id: toastId,
@@ -74,7 +90,6 @@ const MintBadge = ({
       return null;
     } finally {
       setIsMinting(false);
-      setIsMinted(true);
     }
   };
 
